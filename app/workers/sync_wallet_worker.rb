@@ -14,6 +14,7 @@ class SyncWalletWorker
 
       more_events = true
       offset = 0
+      current_nfts = []
 
       until more_events === false do
         Rails.logger.warn("OFFSET: #{offset}")
@@ -45,12 +46,19 @@ class SyncWalletWorker
             end
 
             asset.save
-          
+            current_nfts.push(asset.id)
+            
             wallet.update(status: 'synced')
           end
           
           offset += 50
         end
+
+        #######################################################################
+        # Find NFTs that are no longer in collection and remove them
+        #######################################################################
+        removed_nfts = Item.where(wallet_id: wallet.id).where.not(id: current_nfts)
+        removed_nfts.delete_all
       end
     
     end

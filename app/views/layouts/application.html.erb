@@ -1,32 +1,12 @@
-<!DOCTYPE html>
-<html class="h-full bg-gray-100">
-  <head>
-    <meta charset="utf-8">
-    
-    <title>fx(party)</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <script src="https://kit.fontawesome.com/a48882d923.js" crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    
-    <%= stylesheet_link_tag "inter-font", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+<%= render "layouts/head" %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
-
-  <body class="h-full">
-
-    <div class="min-h-full">
+    <div class="min-h-full bg-gray-100">
       <nav class="bg-black">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div class="flex items-center justify-between h-16">
 
               <div class="flex-shrink">
-                <span class="font-bold text-white">fx(party)</span>
+                <span class="font-bold text-white"><a href="/">fx(party)</a></span>
               </div>
               
               <div class="flex justify-center flex-1 px-2 lg:ml-6 lg:justify-end">
@@ -53,5 +33,4 @@
       
     </div>
 
-  </body>
-</html>
+<%= render "layouts/footer" %>
