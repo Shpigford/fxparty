@@ -29,7 +29,7 @@
                   </dt>
                   <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-blue-600">
-                      <%= @cost_basis.round(1) %> tez
+                      <%= number_with_delimiter @cost_basis.round(1) %> tez
                     </div>
                   </dd>
                 </div>
@@ -40,7 +40,7 @@
                   </dt>
                   <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-blue-600">
-                      <%= @floor_value.round(1) %> tez
+                      <%= number_with_delimiter @floor_value.round(1) %> tez
                     </div>
                   </dd>
                 </div>
@@ -51,7 +51,7 @@
                   </dt>
                   <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-blue-600">
-                      <span class="<%= @unrealized > 0 ? 'text-green-500' : 'text-red-500' %>"><%= (@unrealized).round(1) %> tez</span>
+                      <span class="<%= @unrealized > 0 ? 'text-green-500' : 'text-red-500' %>"><%= number_with_delimiter (@unrealized).round(1) %> tez</span>
                     </div>
                   </dd>
                 </div>
@@ -62,7 +62,7 @@
                   </dt>
                   <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-blue-600">
-                      <%= @items.count %>
+                      <%= number_with_delimiter @items.count %>
                     </div>
                   </dd>
                 </div>
