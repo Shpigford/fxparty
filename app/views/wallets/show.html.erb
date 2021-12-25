@@ -48,6 +48,10 @@
               </thead>
               <tbody>
                 <% @items.each do |item| %>
+                <% 
+                  token = Token.find_by(fxid: item.token_fxid)
+                  if token.present? 
+                %>
                 <tr class="bg-white">
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <%= link_to item.name, "https://www.fxhash.xyz/gentk/#{item.fxid}" %>
@@ -65,24 +69,22 @@
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <% if item.last_purchase_price_tz.present? %>
                     <% 
-                      floor = Token.find_by(fxid: item.token_fxid).floor.to_s.sub(/\.?0+$/, '') 
-                      floor_color = floor.to_f > last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
+                      floor_color = token.floor.to_f > last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
                     %>
-                    <%= floor.present? ? "<span class='#{floor_color}'>#{floor} tez</span>".html_safe : "/" %>
+                    <%= token.floor.present? ? "<span class='#{floor_color}'>#{token.floor.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez</span>".html_safe : "/" %>
                     <% end %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                    <% highest_sold = Token.find_by(fxid: item.token_fxid).highest_sold.to_s.sub(/\.?0+$/, '') %>
-                    <%= highest_sold.present? ? "#{highest_sold} tez" : "/" %>
+                    <%= token.highest_sold.present? ? "#{token.highest_sold.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez" : "/" %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                    <% sec_volume_tz_24 = Token.find_by(fxid: item.token_fxid).sec_volume_tz_24.to_s.sub(/\.?0+$/, '') %>
-                    <%= sec_volume_tz_24.present? ? "#{sec_volume_tz_24} tez" : "/" %>
+                    <%= token.sec_volume_tz_24.present? ? "#{token.sec_volume_tz_24.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez" : "/" %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                    <%= Token.find_by(fxid: item.token_fxid).sec_volume_nb_24.to_i %>
+                    <%= token.sec_volume_nb_24.to_i %>
                   </td>
                 </tr>
+                <% end %>
                 <% end %>
               </tbody>
             </table>
