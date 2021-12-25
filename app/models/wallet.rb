@@ -1,0 +1,2 @@
+class Wallet < ApplicationRecord
+end

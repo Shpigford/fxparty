@@ -1,19 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full bg-gray-100">
   <head>
-    <title>Fxparty</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>fx(party)</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <script src="https://kit.fontawesome.com/a48882d923.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    
+    <%= stylesheet_link_tag "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class="h-full">
+
+    <div class="min-h-full">
+      <nav class="bg-black">
+        <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+
+              <div class="flex-shrink">
+                <span class="font-bold text-white">fx(party)</span>
+              </div>
+              
+              <div class="flex justify-center flex-1 px-2 lg:ml-6 lg:justify-end">
+                <form action="/search" class="w-full max-w-lg lg:max-w-md">
+                  <label for="search" class="sr-only">Search</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <i class="text-gray-400 fa-duotone fa-wallet"></i>
+                      
+                    </div>
+                    <input id="search" name="wallet" class="block w-full py-2 pl-10 pr-3 leading-5 text-gray-300 placeholder-gray-400 bg-gray-700 border border-transparent rounded-md focus:outline-none focus:bg-white focus:border-white focus:ring-white focus:text-gray-900 sm:text-sm" placeholder="tezos wallet address" type="search">
+                  </div>
+                </form>
+              </div>
+
+            
+            
+          </div>
+        </div>
+      </nav>
+
       <%= yield %>
-    </main>
+
+      
+    </div>
+
   </body>
 </html>

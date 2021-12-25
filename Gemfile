@@ -48,8 +48,11 @@ gem "bootsnap", require: false
 # Use Sass to process CSS
 # gem "sassc-rails"
 
-gem 'httparty'
-gem 'nokogiri'
+gem "httparty"
+gem "nokogiri"
+gem "dotenv-rails"
+gem "sidekiq"
+gem "sidekiq-throttled"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"

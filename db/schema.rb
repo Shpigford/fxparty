@@ -10,9 +10,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2021_12_25_191802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "items", force: :cascade do |t|
+    t.integer "fxid"
+    t.integer "token_fxid"
+    t.string "wallet"
+    t.string "name"
+    t.string "transaction_hash"
+    t.decimal "last_purchase_price_tz"
+    t.string "image_url"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tokens", force: :cascade do |t|
+    t.string "name"
+    t.integer "fxid"
+    t.decimal "floor"
+    t.decimal "median"
+    t.decimal "total_listing"
+    t.decimal "highest_sold"
+    t.decimal "lowest_sold"
+    t.decimal "prim_total"
+    t.decimal "sec_volume_tz"
+    t.decimal "sec_volume_nb"
+    t.decimal "sec_volume_tz_24"
+    t.decimal "sec_volume_nb_24"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "delisted", default: false
+  end
+
+  create_table "wallets", force: :cascade do |t|
+    t.string "address"
+    t.datetime "last_updated_at", precision: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "status", default: "syncing"
+  end
 
 end

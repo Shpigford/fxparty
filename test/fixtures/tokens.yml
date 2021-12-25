@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  fxid: 1
+  floor: 9.99
+  median: 9.99
+  total_listing: 9.99
+  highest_sold: 9.99
+  lowest_sold: 9.99
+  prim_total: 9.99
+  sec_volume_tz: 9.99
+  sec_volume_nb_decimal: MyString
+  sec_volume_tz_24: 9.99
+  sec_volume_nb_24: 9.99
+
+two:
+  name: MyString
+  fxid: 1
+  floor: 9.99
+  median: 9.99
+  total_listing: 9.99
+  highest_sold: 9.99
+  lowest_sold: 9.99
+  prim_total: 9.99
+  sec_volume_tz: 9.99
+  sec_volume_nb_decimal: MyString
+  sec_volume_tz_24: 9.99
+  sec_volume_nb_24: 9.99

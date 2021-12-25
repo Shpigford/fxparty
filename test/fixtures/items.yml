@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fxid: 1
+  token_fxid: 1
+  wallet: MyString
+  name: MyString
+  transaction_hash: MyString
+  last_purchase_price_tz: 9.99
+
+two:
+  fxid: 1
+  token_fxid: 1
+  wallet: MyString
+  name: MyString
+  transaction_hash: MyString
+  last_purchase_price_tz: 9.99

@@ -1,0 +1,103 @@
+<header class="bg-white shadow">
+  <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-bold text-gray-900">
+    <% if @wallet.status == 'synced' %>
+      <%= @wallet.address %>
+    <% elsif @wallet.status == 'syncing' %>
+      Syncing your fxhash collection!
+    <% elsif @wallet.status == 'not_found' %>
+      We couldn't find this wallet on fxhash 😢
+    <% end %>
+    </h1>
+  </div>
+</header>
+
+<main>
+  <div class="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="flex flex-col">
+      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+          <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+
+            <% if @wallet.status == 'synced' %>
+            <table class="min-w-full divide-y divide-gray-200 sortable">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Item
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
+                    Token
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
+                    Last Price
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
+                    Floor
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
+                    Highest Sold
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
+                    2nd Sales 24h
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    2nd Sales 24h
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @items.each do |item| %>
+                <tr class="bg-white">
+                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                    <%= link_to item.name, "https://www.fxhash.xyz/gentk/#{item.fxid}" %>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                    <%= link_to item.token_fxid, "https://www.fxhash.xyz/marketplace/generative/#{item.token_fxid}" %>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <% if item.last_purchase_price_tz.present? %>
+                    <% last_purchase_price_tz = (item.last_purchase_price_tz / 1000000).to_s.sub(/\.?0+$/, '') %> 
+                    
+                    <%= last_purchase_price_tz %> tez
+                  <% end %>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                    <% if item.last_purchase_price_tz.present? %>
+                    <% 
+                      floor = Token.find_by(fxid: item.token_fxid).floor.to_s.sub(/\.?0+$/, '') 
+                      floor_color = floor.to_f > last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
+                    %>
+                    <%= floor.present? ? "<span class='#{floor_color}'>#{floor} tez</span>".html_safe : "/" %>
+                    <% end %>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                    <% highest_sold = Token.find_by(fxid: item.token_fxid).highest_sold.to_s.sub(/\.?0+$/, '') %>
+                    <%= highest_sold.present? ? "#{highest_sold} tez" : "/" %>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                    <% sec_volume_tz_24 = Token.find_by(fxid: item.token_fxid).sec_volume_tz_24.to_s.sub(/\.?0+$/, '') %>
+                    <%= sec_volume_tz_24.present? ? "#{sec_volume_tz_24} tez" : "/" %>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                    <%= Token.find_by(fxid: item.token_fxid).sec_volume_nb_24.to_i %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <% elsif @wallet.status == 'syncing' %>
+            <div class="px-8 py-5 bg-white">
+              <p>We're currently syncing your wallet! Refresh the page in a few seconds for 🪄.</p>
+            </div>
+            <% elsif @wallet.status == 'not_found' %>
+            <div class="px-8 py-5 bg-white">
+              <p>Looks like this isn't a valid wallet address or account on fxhash.</p>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
