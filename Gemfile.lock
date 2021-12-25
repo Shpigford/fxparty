@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/hotwired/turbo-rails.git
+  revision: e9b5f68ff81184e2641c6faaedf13e9beedc71ff
+  specs:
+    turbo-rails (1.0.0)
+      actionpack (>= 6.0.0)
+      railties (>= 6.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -191,8 +199,6 @@ GEM
     tailwindcss-rails (2.0.2-x86_64-linux)
       railties (>= 6.0.0)
     thor (1.1.0)
-    turbo-rails (7.1.1)
-      rails (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     web-console (4.2.0)
@@ -234,7 +240,7 @@ DEPENDENCIES
   sprockets-rails
   stimulus-rails
   tailwindcss-rails
-  turbo-rails
+  turbo-rails!
   tzinfo-data
   web-console
   webdrivers
