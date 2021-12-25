@@ -51,7 +51,7 @@
                   </dt>
                   <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-blue-600">
-                      <%= (@floor_value - @cost_basis).round(1) %> tez
+                      <span class="<%= @unrealized > 0 ? 'text-green-500' : 'text-red-500' %>"><%= (@unrealized).round(1) %> tez</span>
                     </div>
                   </dd>
                 </div>
