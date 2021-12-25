@@ -17,9 +17,59 @@
     <div class="flex flex-col">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-          <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+          
 
             <% if @wallet.status == 'synced' %>
+
+            <div class="mb-10">
+              <dl class="grid grid-cols-1 mt-5 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow md:grid-cols-4 md:divide-y-0 md:divide-x">
+                <div class="px-4 py-5 sm:p-6">
+                  <dt class="text-base font-normal text-gray-900">
+                    Portfolio Cost Basis
+                  </dt>
+                  <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-blue-600">
+                      <%= @cost_basis.round(1) %> tez
+                    </div>
+                  </dd>
+                </div>
+
+                <div class="px-4 py-5 sm:p-6">
+                  <dt class="text-base font-normal text-gray-900">
+                    Portfolio Floor Value
+                  </dt>
+                  <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-blue-600">
+                      <%= @floor_value.round(1) %> tez
+                    </div>
+                  </dd>
+                </div>
+
+                <div class="px-4 py-5 sm:p-6">
+                  <dt class="text-base font-normal text-gray-900">
+                    Unrealized Gains/Losses
+                  </dt>
+                  <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-blue-600">
+                      <%= (@floor_value - @cost_basis).round(1) %> tez
+                    </div>
+                  </dd>
+                </div>
+
+                <div class="px-4 py-5 sm:p-6">
+                  <dt class="text-base font-normal text-gray-900">
+                    Portfolio Size
+                  </dt>
+                  <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
+                    <div class="flex items-baseline text-2xl font-semibold text-blue-600">
+                      <%= @items.count %>
+                    </div>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+
+            <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
             <table class="min-w-full divide-y divide-gray-200 sortable">
               <thead class="bg-gray-50">
                 <tr>
@@ -48,16 +98,12 @@
               </thead>
               <tbody>
                 <% @items.each do |item| %>
-                <% 
-                  token = Token.find_by(fxid: item.token_fxid)
-                  if token.present? 
-                %>
                 <tr class="bg-white">
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                    <%= link_to item.name, "https://www.fxhash.xyz/gentk/#{item.fxid}" %>
+                    <%= link_to item.name, "https://www.fxhash.xyz/gentk/#{item.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                    <%= link_to item.token_fxid, "https://www.fxhash.xyz/marketplace/generative/#{item.token_fxid}" %>
+                    <%= link_to item.token.fxid, "https://www.fxhash.xyz/marketplace/generative/#{item.token.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                   <% if item.last_purchase_price_tz.present? %>
@@ -69,35 +115,39 @@
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <% if item.last_purchase_price_tz.present? %>
                     <% 
-                      floor_color = token.floor.to_f > last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
+                      floor_color = item.token.floor.to_f > last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
                     %>
-                    <%= token.floor.present? ? "<span class='#{floor_color}'>#{token.floor.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez</span>".html_safe : "/" %>
+                    <%= item.token.floor.present? ? "<span class='#{floor_color}'>#{item.token.floor.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
                     <% end %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                    <%= token.highest_sold.present? ? "#{token.highest_sold.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez" : "/" %>
+                    <%= item.token.highest_sold.present? ? "#{item.token.highest_sold.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez" : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                    <%= token.sec_volume_tz_24.present? ? "#{token.sec_volume_tz_24.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez" : "/" %>
+                    <%= item.token.sec_volume_tz_24.present? ? "#{item.token.sec_volume_tz_24.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez" : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                    <%= token.sec_volume_nb_24.to_i %>
+                    <%= item.token.sec_volume_nb_24.to_i %>
                   </td>
                 </tr>
                 <% end %>
-                <% end %>
               </tbody>
             </table>
+            </div>
             <% elsif @wallet.status == 'syncing' %>
+            <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
             <div class="px-8 py-5 bg-white">
               <p>We're currently syncing your wallet! Refresh the page in a few seconds for 🪄.</p>
             </div>
+            </div>
             <% elsif @wallet.status == 'not_found' %>
+            <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
             <div class="px-8 py-5 bg-white">
               <p>Looks like this isn't a valid wallet address or account on fxhash.</p>
             </div>
+            </div>
             <% end %>
-          </div>
+          
         </div>
       </div>
     </div>

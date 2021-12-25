@@ -28,12 +28,12 @@ class SyncWalletWorker
         else
           fx_tokens.each do |token|
             fx_asset = token
+            token = Token.find_by(fxid: fx_asset['issuer']['id'])
 
-            asset = Item.find_or_create_by(fxid: fx_asset["id"])
+            asset = Item.find_or_create_by(fxid: fx_asset["id"], wallet: wallet, token: token)
 
             asset.name = fx_asset['name']
             asset.token_fxid = fx_asset['issuer']['id']
-            asset.wallet = wallet_address
             asset.image_url = fx_asset['metadata']['displayUri'] if fx_asset['metadata']['displayUri'].present?
 
             price_found = false
