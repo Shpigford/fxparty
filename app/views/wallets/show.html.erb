@@ -89,10 +89,10 @@
                     Highest Sold
                   </th>
                   <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
-                    2nd Sales 24h
+                    Avg Price 24h
                   </th>
                   <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    2nd Sales 24h
+                    # of Sales 24h
                   </th>
                 </tr>
               </thead>
@@ -124,7 +124,7 @@
                     <%= item.token.highest_sold.present? ? "#{item.token.highest_sold.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez" : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                    <%= item.token.sec_volume_tz_24.present? ? "#{item.token.sec_volume_tz_24.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez" : "<span class='text-gray-200'>—</span>".html_safe %>
+                    <%= item.token.sec_volume_tz_24.present? ? "#{(item.token.sec_volume_tz_24 / item.token.sec_volume_nb_24).round(2).to_s.sub(/\.?0+$/, '')} tez" : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <%= item.token.sec_volume_nb_24.to_i %>
