@@ -53,13 +53,13 @@ class SyncWalletWorker
           
           offset += 50
         end
-
-        #######################################################################
-        # Find NFTs that are no longer in collection and remove them
-        #######################################################################
-        removed_nfts = Item.where(wallet_id: wallet.id).where.not(id: current_nfts)
-        removed_nfts.delete_all
       end
+
+      #######################################################################
+      # Find NFTs that are no longer in collection and remove them
+      #######################################################################
+      removed_nfts = Item.where(wallet_id: wallet.id).where.not(id: current_nfts)
+      removed_nfts.delete_all
     
     end
   end
