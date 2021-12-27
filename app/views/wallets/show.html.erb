@@ -124,7 +124,10 @@
                     <%= item.token.highest_sold.present? ? "#{item.token.highest_sold.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez" : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                    <%= item.token.sec_volume_tz_24.present? ? "#{(item.token.sec_volume_tz_24 / item.token.sec_volume_nb_24).round(2).to_s.sub(/\.?0+$/, '')} tez" : "<span class='text-gray-200'>—</span>".html_safe %>
+                    <% 
+                      volume_color = item.token.sec_volume_tz_24.to_f > last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
+                    %>
+                    <%= item.token.sec_volume_tz_24.present? ? "<span class='#{volume_color}'>#{(item.token.sec_volume_tz_24 / item.token.sec_volume_nb_24).round(2).to_s.sub(/\.?0+$/, '')} tez</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <%= item.token.sec_volume_nb_24.to_i %>
