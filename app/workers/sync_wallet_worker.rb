@@ -2,6 +2,8 @@ class SyncWalletWorker
   include Sidekiq::Worker
 
   def perform(wallet_address)
+    return unless wallet_address.present?
+    
     wallet = Wallet.find_or_create_by(address: wallet_address)
 
     account_check = HTTParty.post("https://api.fxhash.xyz/graphql", :body => '{"operationName":"Query","variables":{"id":"' + wallet_address + '","skip":0,"take":1},"query":"query Query($id: String!, $take: Int, $skip: Int) {user(id: $id) {id objkts(take: $take, skip: $skip) {id assigned iteration owner {id name avatarUri __typename} issuer {id name flag author {id name avatarUri __typename} __typename} name metadata createdAt updatedAt offer {id price issuer {id name avatarUri __typename} __typename} __typename} __typename}}"}',

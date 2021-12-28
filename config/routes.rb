@@ -3,7 +3,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   mount Sidekiq::Web => "/sidekiq"
 
-  resources :wallets
+  resources :wallets, constraints: { id: /[^\/]+/ }
   
   get '/search', to: 'pages#search', as: 'search'
 
