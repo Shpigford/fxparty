@@ -4,7 +4,7 @@ class SyncWalletWorker
   def perform(wallet_address)
     wallet = Wallet.find_or_create_by(address: wallet_address)
 
-    account_check = HTTParty.post("https://api.fxhash.xyz/graphql", :body => '{"operationName":"Query","variables":{"id":"' + wallet_address + '","skip":0,"take":1},"query":"query Query($id: String!, $take: Int, $skip: Int) {\n  user(id: $id) {\n    id\n    objkts(take: $take, skip: $skip) {\n      id\n      assigned\n      iteration\n      owner {\n        id\n        name\n        avatarUri\n        __typename\n      }\n      issuer {\n        id\n        name\n        flag\n        author {\n          id\n          name\n          avatarUri\n          __typename\n        }\n        __typename\n      }\n      name\n      metadata\n  createdAt\n      updatedAt\n      offer {\n        id\n        price\n        issuer {\n          id\n          name\n          avatarUri\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n"}',
+    account_check = HTTParty.post("https://api.fxhash.xyz/graphql", :body => '{"operationName":"Query","variables":{"id":"' + wallet_address + '","skip":0,"take":1},"query":"query Query($id: String!, $take: Int, $skip: Int) {user(id: $id) {id objkts(take: $take, skip: $skip) {id assigned iteration owner {id name avatarUri __typename} issuer {id name flag author {id name avatarUri __typename} __typename} name metadata createdAt updatedAt offer {id price issuer {id name avatarUri __typename} __typename} __typename} __typename}}"}',
     :headers => {'Content-Type' => 'application/json'} ).body
     account_check_data = JSON.parse(account_check)
 
@@ -18,7 +18,7 @@ class SyncWalletWorker
 
       until more_events === false do
         Rails.logger.warn("OFFSET: #{offset}")
-        fx_assets = HTTParty.post("https://api.fxhash.xyz/graphql", :body => '{"operationName":"Query","variables":{"id":"' + wallet_address + '","skip":'+offset.to_s+',"take":50},"query":"query Query($id: String!, $take: Int, $skip: Int) {\n  user(id: $id) {\n    id\n    objkts(take: $take, skip: $skip) {\n      id\n      assigned\n      iteration\n      owner {\n        id\n        name\n        avatarUri\n        __typename\n      }\n      issuer {\n        id\n        name\n        flag\n        author {\n          id\n          name\n          avatarUri\n          __typename\n        }\n        __typename\n      }\n      name\n      metadata\n      actions\n {\n type\n metadata\n createdAt\n  __typename\n}  createdAt\n      updatedAt\n      offer {\n        id\n        price\n        issuer {\n          id\n          name\n          avatarUri\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n"}',
+        fx_assets = HTTParty.post("https://api.fxhash.xyz/graphql", :body => '{"operationName":"Query","variables":{"id":"' + wallet_address + '","skip":'+offset.to_s+',"take":50},"query":"query Query($id: String!, $take: Int, $skip: Int) {user(id: $id) {id objkts(take: $take, skip: $skip) {id assigned iteration owner {id name avatarUri __typename} issuer {id name flag author {id name avatarUri __typename} __typename} name metadata actions {type metadata createdAt __typename} createdAt updatedAt offer {id price issuer {id name avatarUri __typename} __typename} __typename} __typename}}"}',
         :headers => {'Content-Type' => 'application/json'} ).body
         fx_assets_data = JSON.parse(fx_assets)
 
