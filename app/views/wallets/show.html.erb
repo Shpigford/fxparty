@@ -103,7 +103,6 @@
                 <% @items.each do |item| %>
                 <tr class="bg-white">
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                    <%= image_tag ipfs_image(item.image_url), class: 'shadow rounded w-8 h-8 inline-block' %>
                     <%= link_to item.name, "https://www.fxhash.xyz/gentk/#{item.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
