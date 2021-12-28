@@ -1,0 +1,5 @@
+<%- headers = ['Item Name', 'Token Name', 'Token ID', 'Price Paid', 'Floor', 'Highest Sold (tez)', 'Lowest Sold (tez)', 'Total Volume (tez)', 'Total Volume #', 'Average Price 24h (tez)', '# of Sales 24h', 'Supply', 'Balance', 'Royalties', 'Artist' ] -%>
+<%= CSV.generate_line headers %>
+<%- @items.each do |item| -%>
+<%= CSV.generate_line([item.name, item.token.name, item.token.fxid, number_to_tez(item.last_purchase_price_tz), number_to_tez(item.token.floor), number_to_tez(item.token.highest_sold), number_to_tez(item.token.lowest_sold), number_to_tez(item.token.sec_volume_tz), item.token.sec_volume_nb, number_to_tez(item.token.sec_volume_tz_24), item.token.sec_volume_nb_24, item.token.supply, item.token.balance, item.token.royalties, item.token.author_name]).html_safe -%>
+<%- end -%>

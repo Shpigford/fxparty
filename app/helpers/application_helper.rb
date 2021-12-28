@@ -1,6 +1,6 @@
 module ApplicationHelper
   def number_to_tez(number)
-    number / 1000000
+    number.to_i / 1000000
   end
 
   def display_tez(number)
