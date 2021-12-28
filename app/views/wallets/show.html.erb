@@ -125,7 +125,7 @@
                     <% 
                       volume_color = item.token.sec_volume_tz_24.to_f > item.last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
                     %>
-                    <%= item.token.sec_volume_tz_24 > 0 ? "<span class='#{volume_color}'>#{display_tez(item.token.sec_volume_tz_24.to_f / item.token.sec_volume_nb_24.to_f)}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
+                    <%= item.token.sec_volume_tz_24.to_i > 0 ? "<span class='#{volume_color}'>#{display_tez(item.token.sec_volume_tz_24.to_f / item.token.sec_volume_nb_24.to_f)}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <%= item.token.sec_volume_nb_24.to_i %>
