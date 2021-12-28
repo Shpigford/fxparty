@@ -49,7 +49,6 @@ gem "bootsnap", require: false
 # gem "sassc-rails"
 
 gem "httparty"
-gem "nokogiri"
 gem "dotenv-rails"
 gem "sidekiq"
 gem "sidekiq-throttled"

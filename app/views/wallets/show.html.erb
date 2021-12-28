@@ -29,7 +29,7 @@
                   </dt>
                   <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-blue-600">
-                      <%= number_with_delimiter @cost_basis.round(1) %> tez
+                      <%= display_tez @cost_basis %>
                     </div>
                   </dd>
                 </div>
@@ -40,7 +40,7 @@
                   </dt>
                   <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-blue-600">
-                      <%= number_with_delimiter @floor_value.round(1) %> tez
+                      <%= display_tez @floor_value %>
                     </div>
                   </dd>
                 </div>
@@ -51,7 +51,7 @@
                   </dt>
                   <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-blue-600">
-                      <span class="<%= @unrealized > 0 ? 'text-green-500' : 'text-red-500' %>"><%= number_with_delimiter (@unrealized).round(1) %> tez</span>
+                      <span class="<%= @unrealized > 0 ? 'text-green-500' : 'text-red-500' %>"><%= display_tez @unrealized %></span>
                     </div>
                   </dd>
                 </div>
@@ -107,27 +107,25 @@
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                   <% if item.last_purchase_price_tz.present? %>
-                    <% last_purchase_price_tz = (item.last_purchase_price_tz / 1000000).to_s.sub(/\.?0+$/, '') %> 
-                    
-                    <%= last_purchase_price_tz %> tez
+                    <%= display_tez item.last_purchase_price_tz %>
                   <% end %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <% if item.last_purchase_price_tz.present? %>
                     <% 
-                      floor_color = item.token.floor.to_f > last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
+                      floor_color = item.token.floor.to_f > item.last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
                     %>
-                    <%= item.token.floor.present? ? "<span class='#{floor_color}'>#{item.token.floor.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
+                    <%= item.token.floor.present? ? "<span class='#{floor_color}'>#{display_tez item.token.floor}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
                     <% end %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                    <%= item.token.highest_sold.present? ? "#{item.token.highest_sold.to_f.round(2).to_s.sub(/\.?0+$/, '')} tez" : "<span class='text-gray-200'>—</span>".html_safe %>
+                    <%= item.token.highest_sold.present? ? display_tez(item.token.highest_sold) : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <% 
-                      volume_color = item.token.sec_volume_tz_24.to_f > last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
+                      volume_color = item.token.sec_volume_tz_24.to_f > item.last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
                     %>
-                    <%= item.token.sec_volume_tz_24.present? ? "<span class='#{volume_color}'>#{(item.token.sec_volume_tz_24 / item.token.sec_volume_nb_24).round(2).to_s.sub(/\.?0+$/, '')} tez</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
+                    <%= item.token.sec_volume_tz_24 > 0 ? "<span class='#{volume_color}'>#{display_tez(item.token.sec_volume_tz_24.to_f / item.token.sec_volume_nb_24.to_f)}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <%= item.token.sec_volume_nb_24.to_i %>

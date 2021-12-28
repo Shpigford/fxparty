@@ -7,25 +7,34 @@ class SyncTokenWorker
     token = Token.find_or_create_by(fxid: token_id)
 
     unless token.delisted == true
-      begin
-        doc = Nokogiri::HTML(URI.open("https://www.fxhash.xyz/marketplace/generative/#{token_id}"))
-          
-        token.name = doc.at('h3').text
-        token.floor = doc.at('span:contains("Floor")').next_sibling.text == '/' ? nil : doc.at('span:contains("Floor")').next_sibling.text.gsub(' tez','').to_f
-        token.median = doc.at('span:contains("Median")').next_sibling.text == '/' ? nil : doc.at('span:contains("Median")').next_sibling.text.gsub(' tez','').to_f
-        token.total_listing = doc.at('span:contains("Items for sale")').next_sibling.text == '/' ? nil : doc.at('span:contains("Items for sale")').next_sibling.text.to_i
-        token.highest_sold = doc.at('span:contains("Highest 2nd sale")').next_sibling.text == '/' ? nil : doc.at('span:contains("Highest 2nd sale")').next_sibling.text.gsub(' tez','').to_f
-        token.lowest_sold = doc.at('span:contains("Lowest 2nd sale")').next_sibling.text == '/' ? nil : doc.at('span:contains("Lowest 2nd sale")').next_sibling.text.gsub(' tez','').to_f
-        token.prim_total = doc.at('span:contains("1st sales")').next_sibling.text == '/' ? nil : doc.at('span:contains("1st sales")').next_sibling.text.gsub(' tez','').to_f
-        token.sec_volume_tz = doc.at('span:contains("2nd sales (tez)")').next_sibling.text == '/' ? nil : doc.at('span:contains("2nd sales (tez)")').next_sibling.text.gsub(' tez','').to_f
-        token.sec_volume_nb = doc.at('span:contains("2nd sales (nb)")').next_sibling.text == '/' ? nil : doc.at('span:contains("2nd sales (nb)")').next_sibling.text.to_i
-        token.sec_volume_tz_24 = doc.at('span:contains("2nd sales 24h (tez)")').next_sibling.text == '/' ? nil : doc.at('span:contains("2nd sales 24h (tez)")').next_sibling.text.gsub(' tez','').to_f
-        token.sec_volume_nb_24 = doc.at('span:contains("2nd sales 24h (nb)")').next_sibling.text == '/' ? nil : doc.at('span:contains("2nd sales 24h (nb)")').next_sibling.text.to_i
-      rescue OpenURI::HTTPError => error
+      fx_token = HTTParty.post("https://api.fxhash.xyz/graphql", :body => '{"operationName":"Query","variables":{"id":' + token_id.to_s + '},"query":"query Query($id: Float!) {generativeToken(id: $id) {id name price supply balance royalties metadata __typename marketStats {floor median highestSold lowestSold totalListing primTotal secVolumeTz secVolumeNb secVolumeTz24 secVolumeNb24 __typename} author {id name avatarUri __typename}}}"}',
+      :headers => {'Content-Type' => 'application/json'} ).body
+      fx_token_data = JSON.parse(fx_token)
+      fx_token_obj = fx_token_data['data']['generativeToken']
+
+      if fx_token_obj.blank?
         token.delisted = true
-      ensure
-        token.save
-      end 
+      else
+        token.name = fx_token_obj['name']
+        token.supply = fx_token_obj['supply']
+        token.balance = fx_token_obj['balance']
+        token.royalties = fx_token_obj['royalties']
+        token.author_name = fx_token_obj['author']['name']
+        token.author_address = fx_token_obj['author']['id']
+        token.author_avatar = fx_token_obj['author']['avatarUri']
+        token.floor = fx_token_obj['marketStats']['floor']
+        token.median = fx_token_obj['marketStats']['median']
+        token.total_listing = fx_token_obj['marketStats']['totalListing']
+        token.highest_sold = fx_token_obj['marketStats']['highestSold']
+        token.lowest_sold = fx_token_obj['marketStats']['lowestSold']
+        token.prim_total = fx_token_obj['marketStats']['primTotal']
+        token.sec_volume_tz = fx_token_obj['marketStats']['secVolumeTz']
+        token.sec_volume_nb = fx_token_obj['marketStats']['secVolumeNb']
+        token.sec_volume_tz_24 = fx_token_obj['marketStats']['secVolumeTz24']
+        token.sec_volume_nb_24 = fx_token_obj['marketStats']['secVolumeNb24']
+      end
+        
+      token.save
     end
   end
 end
