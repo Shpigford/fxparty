@@ -6,4 +6,13 @@ module ApplicationHelper
   def display_tez(number)
     "#{number_with_delimiter(number_to_tez(number).round(1).to_s.sub(/\.?0+$/, ''))} tez"
   end
+
+  def ipfs_image(url)
+    if url.include?('ipfs:')
+      token = url.gsub('ipfs://','')
+      "https://cloudflare-ipfs.com/ipfs/#{token}/"
+    else
+      url
+    end
+  end
 end
