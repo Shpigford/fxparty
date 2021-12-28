@@ -32,6 +32,7 @@ class SyncTokenWorker
         token.sec_volume_nb = fx_token_obj['marketStats']['secVolumeNb']
         token.sec_volume_tz_24 = fx_token_obj['marketStats']['secVolumeTz24']
         token.sec_volume_nb_24 = fx_token_obj['marketStats']['secVolumeNb24']
+        token.delisted = false
       end
         
       token.save
