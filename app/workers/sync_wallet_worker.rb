@@ -48,7 +48,7 @@ class SyncWalletWorker
             asset.save
             current_nfts.push(asset.id)
             
-            wallet.update(status: 'synced')
+            wallet.update(status: 'synced', last_updated_at: Time.now)
           end
           
           offset += 50
