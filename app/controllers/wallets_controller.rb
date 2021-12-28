@@ -7,6 +7,7 @@ class WalletsController < ApplicationController
       @floor_value = @items.sum('tokens.floor')
       @cost_basis = @items.sum(:last_purchase_price_tz) / 1000000
       @unrealized = @floor_value - @cost_basis
+      @wallet.touch(:last_viewed_at)
     elsif @wallet.status != 'not_found'
       SyncWalletWorker.perform_async(@wallet.address)
       
