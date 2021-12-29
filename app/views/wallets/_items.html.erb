@@ -1,0 +1,68 @@
+<table class="min-w-full divide-y divide-gray-200 sortable">
+  <thead class="bg-gray-50">
+    <tr>
+      <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+      <%=
+        link_to "Item <i class='fa-duotone #{sort_icon('text', params[:dir])}'></i>".html_safe, wallet_path(params[:id], sort: 'item', dir: @link_sort), 'data-turbo' => true
+      %>
+      </th>
+      <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
+        Token
+      </th>
+      <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
+        Price Paid
+      </th>
+      <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
+        Floor
+      </th>
+      <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
+        Highest Sold
+      </th>
+      <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
+        Avg Price 24h
+      </th>
+      <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+        # of Sales 24h
+      </th>
+    </tr>
+  </thead>
+              
+  <tbody>
+    <% @items.each do |item| %>
+    <tr class="bg-white">
+      <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+        <%= link_to item.name, "https://www.fxhash.xyz/gentk/#{item.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
+      </td>
+      <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+        <%= link_to item.token.fxid, "https://www.fxhash.xyz/marketplace/generative/#{item.token.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
+      </td>
+      <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+      <% if item.last_purchase_price_tz.present? %>
+        <%= display_tez item.last_purchase_price_tz %>
+      <% end %>
+      </td>
+      <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+        <% if item.last_purchase_price_tz.present? %>
+        <% 
+          floor_color = item.token.floor.to_f > item.last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
+        %>
+        <%= item.token.floor.present? ? "<span class='#{floor_color}'>#{display_tez item.token.floor}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
+        <% end %>
+      </td>
+      <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+        <%= item.token.highest_sold.present? ? display_tez(item.token.highest_sold) : "<span class='text-gray-200'>—</span>".html_safe %>
+      </td>
+      <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+        <% 
+          volume_color = item.token.sec_volume_tz_24.to_f > item.last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
+        %>
+        <%= item.token.sec_volume_tz_24.to_i > 0 ? "<span class='#{volume_color}'>#{display_tez(item.token.sec_volume_tz_24.to_f / item.token.sec_volume_nb_24.to_f)}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
+      </td>
+      <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+        <%= item.token.sec_volume_nb_24.to_i %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+              
+</table>

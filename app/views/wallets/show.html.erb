@@ -73,36 +73,38 @@
             </div>
 
             <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+            <%= turbo_frame_tag "items" do %>
             <table class="min-w-full divide-y divide-gray-200 sortable">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Item
+                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">
+                  <%= heading_link(@wallet.address, 'Item', 'item', 'text', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
-                    Token
+                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase number">
+                    <%= heading_link(@wallet.address, 'Token', 'token', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
-                    Price Paid
+                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase number">
+                    <%= heading_link(@wallet.address, 'Price Paid', 'last_purchase_price_tz', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
-                    Floor
+                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase number">
+                    <%= heading_link(@wallet.address, 'Floor', 'floor', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
-                    Highest Sold
+                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase number">
+                    <%= heading_link(@wallet.address, 'Highest Sold', 'highest_sold', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase number">
-                    Avg Price 24h
+                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase number">
+                    <%= heading_link(@wallet.address, 'Avg Price 24h', 'sec_volume_tz_24', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    # of Sales 24h
+                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">
+                    <%= heading_link(@wallet.address, '# of Sales 24h', 'sec_volume_nb_24', 'number', params[:dir], params[:sort]) %>
                   </th>
                 </tr>
               </thead>
+              
               <tbody>
                 <% @items.each do |item| %>
                 <tr class="bg-white">
-                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <td class="max-w-xs px-6 py-4 text-sm text-gray-800 truncate whitespace-nowrap">
                     <%= link_to item.name, "https://www.fxhash.xyz/gentk/#{item.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
                   </td>
                   <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
@@ -136,7 +138,9 @@
                 </tr>
                 <% end %>
               </tbody>
+              
             </table>
+            <% end %>
             </div>
             <% elsif @wallet.status == 'syncing' %>
             <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">

@@ -3,7 +3,42 @@ class WalletsController < ApplicationController
 
   def show
     if @wallet.status == 'synced'
-      @items = @wallet.items.includes(:token).order(last_purchase_price_tz: :desc)
+      if params[:sort].present?
+        sort = case params[:sort]
+        when 'item'
+          'name'
+        when 'token'
+          'tokens.fxid'
+        when 'floor'
+          'tokens.floor'
+        when 'highest_sold'
+          'tokens.highest_sold'
+        when 'sec_volume_tz_24'
+          'tokens.sec_volume_tz_24'
+        when 'sec_volume_nb_24'
+          'tokens.sec_volume_nb_24'
+        else
+          params[:sort]
+        end
+      else
+        sort = 'last_purchase_price_tz'
+      end
+
+      if params[:dir].present?
+        sort_direction = case params[:dir]
+        when 'asc'
+          'asc'
+        else
+          'desc'
+        end
+      else
+        sort_direction = 'desc'
+      end
+
+      @items = @wallet.items.includes(:token).order("#{sort} #{sort_direction} NULLS LAST")
+
+      @link_sort = sort_direction == 'desc' ? 'asc' : 'desc'
+
       @floor_value = @items.sum('tokens.floor')
       @cost_basis = @items.sum(:last_purchase_price_tz)
       @unrealized = @floor_value - @items.sum(:last_purchase_price_tz)
