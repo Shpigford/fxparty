@@ -1,10 +1,10 @@
 module ApplicationHelper
   def number_to_tez(number)
-    number.to_i / 1000000
+    number.to_f / 1000000
   end
 
   def display_tez(number)
-    "#{number_with_delimiter(number_to_tez(number).round(1).to_s.sub(/\.?0+$/, ''))} tez"
+    "#{number_with_delimiter(number_to_tez(number).round(2).to_s.sub(/\.?0+$/, ''))} tez"
   end
 
   def ipfs_image(url)
