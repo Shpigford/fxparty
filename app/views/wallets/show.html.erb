@@ -2,7 +2,7 @@
   <div class="flex justify-between px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
     <h1 class="text-2xl font-bold text-gray-900">
     <% if @wallet.status == 'synced' %>
-      <%= @wallet.domain.present? ? @wallet.domain : @wallet.address %>
+      <%= @wallet.domain.present? ? @wallet.domain : @wallet.address %> <span class="text-xs font-light text-gray-400 align-middle">Updated <%= time_ago_in_words @wallet.last_updated_at %> ago</span>
     <% elsif @wallet.status == 'syncing' %>
       Syncing your fxhash collection!
     <% elsif @wallet.status == 'not_found' %>
