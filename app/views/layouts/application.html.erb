@@ -31,7 +31,20 @@
 
       <%= yield %>
 
-      
+      <footer class="mt-10 bg-white">
+        <div class="px-4 py-12 mx-auto max-w-7xl sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
+          <div class="flex justify-center space-x-6 text-2xl md:order-2">
+            <a href="https://twitter.com/fxpartyxyz" class="text-gray-400 hover:text-blue-500">
+              <span class="sr-only">Twitter</span>
+              <i class="fa-brands fa-twitter"></i>
+            </a>
+          </div>
+          <div class="mt-8 md:mt-0 md:order-1">
+            <p class="text-base text-center text-gray-400">
+              &copy;<%= Date.today.year %> Sabotage Media, LLC. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
-
 <%= render "layouts/footer" %>

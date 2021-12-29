@@ -32,3 +32,7 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+.env
+ngrok
+*/.DS_Store
