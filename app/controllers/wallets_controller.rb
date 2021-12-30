@@ -17,6 +17,8 @@ class WalletsController < ApplicationController
           'tokens.sec_volume_tz_24'
         when 'sec_volume_nb_24'
           'tokens.sec_volume_nb_24'
+        when 'balance'
+          'tokens.mint_progress'
         else
           params[:sort]
         end

@@ -18,10 +18,9 @@
 <main>
   <div class="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
     <div class="flex flex-col">
-      <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+      <div class="-my-2 sm:-mx-6 lg:-mx-8">
+        <div class="py-2 align-middle sm:px-6 lg:px-8">
           
-
             <% if @wallet.status == 'synced' %>
 
             <div class="mb-10">
@@ -74,29 +73,33 @@
 
             <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
             <%= turbo_frame_tag "items" do %>
-            <table class="min-w-full divide-y divide-gray-200 sortable">
+            <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 table-fixed">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">
+                  <th scope="col" class="sticky left-0 px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase bg-gray-50">
                   <%= heading_link(@wallet.address, 'Item', 'item', 'text', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase number">
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
                     <%= heading_link(@wallet.address, 'Token', 'token', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase number">
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
+                    <%= heading_link(@wallet.address, 'Progress', 'balance', 'number', params[:dir], params[:sort]) %>
+                  </th>
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
                     <%= heading_link(@wallet.address, 'Price Paid', 'last_purchase_price_tz', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase number">
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
                     <%= heading_link(@wallet.address, 'Floor', 'floor', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase number">
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
                     <%= heading_link(@wallet.address, 'Highest Sold', 'highest_sold', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase number">
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
                     <%= heading_link(@wallet.address, 'Avg Price 24h', 'sec_volume_tz_24', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">
-                    <%= heading_link(@wallet.address, '# of Sales 24h', 'sec_volume_nb_24', 'number', params[:dir], params[:sort]) %>
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase whitespace-nowrap">
+                    <%= heading_link(@wallet.address, '# Sales 24h', 'sec_volume_nb_24', 'number', params[:dir], params[:sort]) %>
                   </th>
                 </tr>
               </thead>
@@ -104,18 +107,29 @@
               <tbody>
                 <% @items.each do |item| %>
                 <tr class="bg-white">
-                  <td class="max-w-xs px-6 py-4 text-sm text-gray-800 truncate whitespace-nowrap">
+                  <td class="absolute sticky left-0 max-w-xs px-4 py-4 text-sm text-gray-800 truncate bg-white border-r border-gray-200 whitespace-nowrap">
                     <%= link_to item.name, "https://www.fxhash.xyz/gentk/#{item.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
                   </td>
-                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap bg-gradient-to-r from-gray-50 via-white to-white">
                     <%= link_to item.token.fxid, "https://www.fxhash.xyz/marketplace/generative/#{item.token.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
                   </td>
-                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <div class="flex">
+                    <div class="w-24 h-1 mt-1 bg-gray-200">
+                    <% 
+                      progress_color = item.token.mint_progress.to_f >= 100 ? 'bg-green-500' : 'bg-blue-500'
+                    %>
+                      <div class="h-1 <%= progress_color %>" style="width: <%= item.token.mint_progress %>%"></div> 
+                    </div> 
+                    <div class="ml-2 text-xs text-gray-500">(<%= item.token.balance %>/<%= item.token.supply %>)</div>
+                    </div>
+                  </td>
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
                   <% if item.last_purchase_price_tz.present? %>
                     <%= display_tez item.last_purchase_price_tz %>
                   <% end %>
                   </td>
-                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <% if item.last_purchase_price_tz.present? %>
                     <% 
                       floor_color = item.token.floor.to_f > item.last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
@@ -123,16 +137,16 @@
                     <%= item.token.floor.present? ? "<span class='#{floor_color}'>#{display_tez item.token.floor}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
                     <% end %>
                   </td>
-                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <%= item.token.highest_sold.present? ? display_tez(item.token.highest_sold) : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
-                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <% 
                       volume_color = item.token.sec_volume_tz_24.to_f > item.last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
                     %>
                     <%= item.token.sec_volume_tz_24.to_i > 0 ? "<span class='#{volume_color}'>#{display_tez(item.token.sec_volume_tz_24.to_f / item.token.sec_volume_nb_24.to_f)}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
-                  <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <%= item.token.sec_volume_nb_24.to_i %>
                   </td>
                 </tr>
@@ -140,6 +154,7 @@
               </tbody>
               
             </table>
+            </div>
             <% end %>
             </div>
             <% elsif @wallet.status == 'syncing' %>
