@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  token: one
+  metric: MyString
+  value: 9.99
+  captured_at: 2021-12-29 23:08:03
+
+two:
+  token: two
+  metric: MyString
+  value: 9.99
+  captured_at: 2021-12-29 23:08:03
