@@ -121,7 +121,7 @@
                     %>
                       <div class="h-1 <%= progress_color %>" style="width: <%= item.token.mint_progress %>%"></div> 
                     </div> 
-                    <div class="ml-2 text-xs text-gray-500">(<%= item.token.balance %>/<%= item.token.supply %>)</div>
+                    <div class="ml-2 text-xs text-gray-500">(<%= item.token.supply - item.token.balance %>/<%= item.token.supply %>)</div>
                   </div>
                   </td>
                   <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
