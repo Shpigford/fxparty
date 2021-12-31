@@ -6,7 +6,7 @@
     <% elsif @wallet.status == 'syncing' %>
       Syncing your fxhash collection!
     <% elsif @wallet.status == 'not_found' %>
-      We couldn't find this wallet on fxhash 😢
+      We couldn't find this wallet on fxhash <i class="text-red-600 fa-duotone fa-face-sad-tear"></i>
     <% end %>
     </h1>
     <% if @wallet.status == 'synced' %>

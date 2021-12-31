@@ -6,9 +6,12 @@ export default class extends Controller {
 
   launchModal(event) {
     this.modalTarget.classList.remove('hidden');
+    event.preventDefault();
   }
 
   closeModal(event) {
     this.modalTarget.classList.add('hidden');
+    event.preventDefault();
   }
+
 }
