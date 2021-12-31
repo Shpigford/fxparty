@@ -52,7 +52,7 @@ class TokensController < ApplicationController
 
     @link_sort = sort_direction == 'desc' ? 'asc' : 'desc'
 
-    @tokens = Token.active.limit(100).order("#{sort} #{sort_direction} NULLS LAST")
+    @tokens = Token.active.limit(250).order("#{sort} #{sort_direction} NULLS LAST")
   end
   
 end
