@@ -77,28 +77,28 @@
             <table class="min-w-full divide-y divide-gray-200 table-fixed">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="sticky left-0 px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase bg-gray-50">
+                  <th scope="col" class="sticky left-0 px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase bg-gray-50 <%= cell_color_sort(params[:sort], 'item', true) %>">
                   <%= heading_link(@wallet.address, 'Item', 'item', 'text', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap <%= cell_color_sort(params[:sort], 'token', true) %>">
                     <%= heading_link(@wallet.address, 'Token', 'token', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap <%= cell_color_sort(params[:sort], 'balance', true) %>">
                     <%= heading_link(@wallet.address, 'Progress', 'balance', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap <%= cell_color_sort(params[:sort], 'last_purchase_price_tz', true) %>">
                     <%= heading_link(@wallet.address, 'Price Paid', 'last_purchase_price_tz', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap <%= cell_color_sort(params[:sort], 'floor', true) %>">
                     <%= heading_link(@wallet.address, 'Floor', 'floor', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap <%= cell_color_sort(params[:sort], 'highest_sold', true) %>">
                     <%= heading_link(@wallet.address, 'Highest Sold', 'highest_sold', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
-                    <%= heading_link(@wallet.address, 'Avg Price 24h', 'sec_volume_tz_24', 'number', params[:dir], params[:sort]) %>
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap <%= cell_color_sort(params[:sort], 'avg_price_24h', true) %>">
+                    <%= heading_link(@wallet.address, 'Avg Price 24h', 'avg_price_24h', 'number', params[:dir], params[:sort]) %>
                   </th>
-                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase whitespace-nowrap">
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase whitespace-nowrap <%= cell_color_sort(params[:sort], 'sec_volume_nb_24', true) %>">
                     <%= heading_link(@wallet.address, '# Sales 24h', 'sec_volume_nb_24', 'number', params[:dir], params[:sort]) %>
                   </th>
                 </tr>
@@ -110,10 +110,10 @@
                   <td class="absolute sticky left-0 max-w-xs px-4 py-4 text-sm text-gray-800 truncate bg-white border-r border-gray-200 whitespace-nowrap">
                     <%= link_to item.name, "https://www.fxhash.xyz/gentk/#{item.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
                   </td>
-                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap bg-gradient-to-r from-gray-50 via-white to-white">
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap <% unless params[:sort] == 'token' %>bg-gradient-to-r from-gray-50 via-white to-white<% end %> <%= cell_color_sort(params[:sort], 'token') %>">
                     <%= link_to item.token.fxid, "https://www.fxhash.xyz/marketplace/generative/#{item.token.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
                   </td>
-                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap <%= cell_color_sort(params[:sort], 'balance') %>">
                   <div class="flex">
                     <div class="w-24 h-1 mt-1 bg-gray-200">
                     <% 
@@ -124,12 +124,12 @@
                     <div class="ml-2 text-xs text-gray-500">(<%= item.token.supply - item.token.balance %>/<%= item.token.supply %>)</div>
                   </div>
                   </td>
-                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap <%= cell_color_sort(params[:sort], 'last_purchase_price_tz') %>">
                   <% if item.last_purchase_price_tz.present? %>
                     <%= display_tez item.last_purchase_price_tz %>
                   <% end %>
                   </td>
-                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap <%= cell_color_sort(params[:sort], 'floor') %>">
                     <% if item.last_purchase_price_tz.present? %>
                     <% 
                       floor_color = item.token.floor.to_f > item.last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
@@ -137,16 +137,16 @@
                     <%= item.token.floor.present? ? "<span class='#{floor_color}'>#{display_tez item.token.floor}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
                     <% end %>
                   </td>
-                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap <%= cell_color_sort(params[:sort], 'highest_sold') %>">
                     <%= item.token.highest_sold.present? ? display_tez(item.token.highest_sold) : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
-                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap <%= cell_color_sort(params[:sort], 'avg_price_24h') %>">
                     <% 
                       volume_color = item.token.avg_price_24h.to_f > item.last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
                     %>
                     <%= item.token.avg_price_24h.to_i > 0 ? "<span class='#{volume_color}'>#{display_tez(item.token.avg_price_24h.to_f)}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
-                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap <%= cell_color_sort(params[:sort], 'sec_volume_nb_24') %>">
                     <%= item.token.sec_volume_nb_24.to_i %>
                   </td>
                 </tr>

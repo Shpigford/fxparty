@@ -19,6 +19,8 @@ class WalletsController < ApplicationController
           'tokens.sec_volume_nb_24'
         when 'balance'
           'tokens.mint_progress'
+        when 'avg_price_24h'
+          'tokens.avg_price_24h'
         else
           params[:sort]
         end
