@@ -12,12 +12,12 @@ class SyncTokenWorker
     if fx_token_obj.blank?
       token.delisted = true
     else
-      token.name = fx_token_obj['name']
+      token.name = fx_token_obj['name'].strip
       token.supply = fx_token_obj['supply']
       token.balance = fx_token_obj['balance']
       token.mint_progress = ((fx_token_obj['supply'] - fx_token_obj['balance']).to_f / fx_token_obj['supply'].to_f) * 100 
       token.royalties = fx_token_obj['royalties']
-      token.author_name = fx_token_obj['author']['name']
+      token.author_name = fx_token_obj['author']['name'].strip
       token.author_address = fx_token_obj['author']['id']
       token.author_avatar = fx_token_obj['author']['avatarUri']
 
