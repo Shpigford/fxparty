@@ -142,9 +142,9 @@
                   </td>
                   <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <% 
-                      volume_color = item.token.sec_volume_tz_24.to_f > item.last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
+                      volume_color = item.token.avg_price_24h.to_f > item.last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
                     %>
-                    <%= item.token.sec_volume_tz_24.to_i > 0 ? "<span class='#{volume_color}'>#{display_tez(item.token.sec_volume_tz_24.to_f / item.token.sec_volume_nb_24.to_f)}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
+                    <%= item.token.avg_price_24h.to_i > 0 ? "<span class='#{volume_color}'>#{display_tez(item.token.avg_price_24h.to_f)}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
                   </td>
                   <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
                     <%= item.token.sec_volume_nb_24.to_i %>

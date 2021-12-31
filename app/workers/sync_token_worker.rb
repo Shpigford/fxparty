@@ -33,6 +33,10 @@ class SyncTokenWorker
       token.sec_volume_tz_24 = fx_token_obj['marketStats']['secVolumeTz24']
       token.sec_volume_nb_24 = fx_token_obj['marketStats']['secVolumeNb24']
 
+      if token.sec_volume_tz_24.to_i > 0
+        token.avg_price_24h = token.sec_volume_tz_24.to_f / token.sec_volume_nb_24.to_f
+      end
+
       token.delisted = false
 
       captured_at = DateTime.now
