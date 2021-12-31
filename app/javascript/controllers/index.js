@@ -3,3 +3,6 @@
 // ./bin/rails generate stimulus controllerName
 
 import { application } from "./application"
+
+import NavController from "./nav_controller.js"
+application.register("nav", NavController)
