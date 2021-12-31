@@ -32,6 +32,8 @@ class TokensController < ApplicationController
         'sec_volume_nb_24'
       when 'balance'
         'mint_progress'
+      when 'created_at'
+        'created_at'
       else
         params[:sort]
       end

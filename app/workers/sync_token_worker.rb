@@ -4,7 +4,7 @@ class SyncTokenWorker
   def perform(token_id)
     token = Token.find_or_create_by(fxid: token_id)
 
-    fx_token = HTTParty.post("https://api.fxhash.xyz/graphql", :body => '{"operationName":"Query","variables":{"id":' + token_id.to_s + '},"query":"query Query($id: Float!) {generativeToken(id: $id) {id name price supply balance royalties metadata __typename marketStats {floor median highestSold lowestSold totalListing primTotal secVolumeTz secVolumeNb secVolumeTz24 secVolumeNb24 __typename} author {id name avatarUri __typename}}}"}',
+    fx_token = HTTParty.post("https://api.fxhash.xyz/graphql", :body => '{"operationName":"Query","variables":{"id":' + token_id.to_s + '},"query":"query Query($id: Float!) {generativeToken(id: $id) {id name price supply balance royalties createdAt metadata __typename marketStats {floor median highestSold lowestSold totalListing primTotal secVolumeTz secVolumeNb secVolumeTz24 secVolumeNb24 __typename} author {id name avatarUri __typename}}}"}',
     :headers => {'Content-Type' => 'application/json'} ).body
     fx_token_data = JSON.parse(fx_token)
     fx_token_obj = fx_token_data['data']['generativeToken']
@@ -17,9 +17,10 @@ class SyncTokenWorker
       token.balance = fx_token_obj['balance']
       token.mint_progress = ((fx_token_obj['supply'] - fx_token_obj['balance']).to_f / fx_token_obj['supply'].to_f) * 100 
       token.royalties = fx_token_obj['royalties']
-      token.author_name = fx_token_obj['author']['name'].strip
+      token.author_name = fx_token_obj['author']['name'].strip if fx_token_obj['author']['name'].present?
       token.author_address = fx_token_obj['author']['id']
       token.author_avatar = fx_token_obj['author']['avatarUri']
+      token.created_at = fx_token_obj['createdAt'].to_datetime
 
       token.floor = fx_token_obj['marketStats']['floor']
       token.median = fx_token_obj['marketStats']['median']

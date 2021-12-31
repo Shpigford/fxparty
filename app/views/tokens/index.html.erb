@@ -32,6 +32,9 @@
                   <%= heading_link(nil, 'Progress', 'balance', 'number', params[:dir], params[:sort], 'token') %>
                 </th>
                 <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
+                  <%= heading_link(nil, 'Created', 'created_at', 'number', params[:dir], params[:sort], 'token') %>
+                </th>
+                <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
                   <%= heading_link(nil, 'Royalties', 'royalties', 'number', params[:dir], params[:sort], 'token') %>
                 </th>
                 <th scope="col" class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase number whitespace-nowrap">
@@ -93,7 +96,10 @@
                     <div class="ml-2 text-xs text-gray-500">(<%= token.balance %>/<%= token.supply %>)</div>
                   </div>
                 </td>
-                 <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
+                <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
+                  <%= token.created_at.strftime("%m-%-e-%y %H:%M") %>
+                </td>
+                <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
                   <%= (token.royalties.to_f / 10).to_s.sub(/\.?0+$/, '') %>%
                 </td>
                 <td class="px-4 py-4 text-sm text-gray-800 whitespace-nowrap">
