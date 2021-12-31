@@ -12,7 +12,7 @@ module WalletsHelper
     "fa-arrow-#{direction}-#{type}"
   end
 
-  def heading_link(address, name, sort, type, cur_dir, cur_sort)
+  def heading_link(address, name, sort, type, cur_dir, cur_sort, path_type="wallet")
     type = case type
     when 'text'
       'a-z'
@@ -35,7 +35,14 @@ module WalletsHelper
       full_icon = "fa-duotone #{icon}"
     end
 
-    link_to "#{name} <i class='#{full_icon}'></i>".html_safe, wallet_path(address, sort: sort, dir: sort_direction)
+    path = case path_type
+    when 'wallet'
+      wallet_path(address, sort: sort, dir: sort_direction)
+    when 'token'
+      tokens_path(sort: sort, dir: sort_direction)
+    end
+
+    link_to "#{name} <i class='#{full_icon}'></i>".html_safe, path
   end
   
   
