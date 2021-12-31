@@ -34,6 +34,8 @@ class TokensController < ApplicationController
         'mint_progress'
       when 'created_at'
         'created_at'
+      when 'avg_price_24h'
+        'avg_price_24h'
       else
         params[:sort]
       end
