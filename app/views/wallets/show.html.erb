@@ -74,8 +74,8 @@
             <div class="flex flex-row-reverse mb-2" data-controller="column-filter" data-column-filter-type="wallet">
               <div class="relative inline-block text-left">
                 <div>
-                  <button type="button" class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true" data-action="click->column-filter#show">
-                    <i class="w-5 h-5 mr-2 fa-duotone fa-table-columns"></i> Columns
+                  <button type="button" class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500" id="menu-button" aria-expanded="true" aria-haspopup="true" data-action="click->column-filter#show">
+                    <i class="w-5 h-5 mr-2 text-blue-600 fa-duotone fa-table-columns"></i> Columns
                   </button>
                 </div>
 
@@ -84,7 +84,7 @@
                   <form class="space-y-4">
                     <% [['Token', 'token'], ['Progress', 'balance'], ['Price Paid', 'last_purchase_price_tz'], ['Floor', 'floor'], ['Highest Sold', 'highest_sold'], ['Avg Price 24h', 'avg_price_24h'], ['# Sales 24h', 'sec_volume_nb_24']].each_with_index do |filter, index| %>
                       <div class="flex items-center">
-                        <input id="filter-<%= index %>" name="filter" value="<%= filter[1] %>" type="checkbox" class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" data-action="click->column-filter#filter" data-column-filter-target="filters">
+                        <input id="filter-<%= index %>" name="filter" value="<%= filter[1] %>" type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" data-action="click->column-filter#filter" data-column-filter-target="filters">
                         <label for="filter-<%= index %>" class="pr-6 ml-3 text-sm font-medium text-gray-900 whitespace-nowrap">
                           <%= filter[0] %>
                         </label>
