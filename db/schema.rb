@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_31_203439) do
+ActiveRecord::Schema.define(version: 2022_01_01_192308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2021_12_31_203439) do
     t.string "metric"
     t.decimal "value"
     t.datetime "captured_at", precision: 6
+    t.index ["metric"], name: "index_stats_on_metric"
     t.index ["token_id"], name: "index_stats_on_token_id"
   end
 
