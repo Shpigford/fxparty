@@ -82,7 +82,7 @@
                 <div class="absolute right-0 z-50 hidden p-4 mt-2 origin-top-right bg-white rounded-md shadow-lg w-46 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" data-column-filter-target="options">
                   
                   <form class="space-y-4">
-                    <% [['Token', 'token'], ['Progress', 'balance'], ['Price Paid', 'last_purchase_price_tz'], ['Floor', 'floor'], ['Highest Sold', 'highest_sold'], ['Avg Price 24h', 'avg_price_24h'], ['# Sales 24h', 'sec_volume_nb_24']].each_with_index do |filter, index| %>
+                    <% [['Token', 'token'], ['Progress', 'balance'], ['Price Paid', 'last_purchase_price_tz'], ['Floor', 'floor'], ['Floor Change 24h', 'floor_change_24h'], ['Highest Sold', 'highest_sold'], ['Avg Price 24h', 'avg_price_24h'], ['# Sales 24h', 'sec_volume_nb_24']].each_with_index do |filter, index| %>
                       <div class="flex items-center">
                         <input id="filter-<%= index %>" name="filter" value="<%= filter[1] %>" type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" data-action="click->column-filter#filter" data-column-filter-target="filters">
                         <label for="filter-<%= index %>" class="pr-6 ml-3 text-sm font-medium text-gray-900 whitespace-nowrap">
@@ -116,6 +116,9 @@
                   </th>
                   <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'floor', true) %>" data-column="floor">
                     <%= heading_link(@wallet.address, 'Floor', 'floor', 'number', params[:dir], params[:sort]) %>
+                  </th>
+                  <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'floor_change_24h', true) %>" data-column="floor_change_24h">
+                    <%= heading_link(@wallet.address, 'Floor Change 24h', 'floor_change_24h', 'number', params[:dir], params[:sort]) %>
                   </th>
                   <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'highest_sold', true) %>" data-column="highest_sold">
                     <%= heading_link(@wallet.address, 'Highest Sold', 'highest_sold', 'number', params[:dir], params[:sort]) %>
@@ -161,6 +164,19 @@
                     %>
                     <%= item.token.floor.present? ? "<span class='#{floor_color}'>#{display_tez item.token.floor}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
                     <% end %>
+                  </td>
+                  <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'floor_change_24h') %>" data-column="floor_change_24h">
+                    <% 
+                      floor_change_color = case
+                      when item.token.floor_change_24h.to_f > 0
+                        'text-green-500'
+                      when item.token.floor_change_24h.to_f < 0
+                        'text-red-500'
+                      else
+                        'text-gray-200'
+                      end
+                    %>
+                    <span class=<%= floor_change_color %>><%= number_to_percentage item.token.floor_change_24h, precision: 1 %></span>
                   </td>
                   <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'highest_sold') %>" data-column="highest_sold">
                     <%= item.token.highest_sold.present? ? display_tez(item.token.highest_sold) : "<span class='text-gray-200'>—</span>".html_safe %>

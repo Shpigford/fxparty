@@ -36,6 +36,8 @@ class TokensController < ApplicationController
         'created_at'
       when 'avg_price_24h'
         'avg_price_24h'
+      when 'floor_change_24h'
+        'floor_change_24h'
       else
         params[:sort]
       end

@@ -41,6 +41,17 @@ class SyncTokenWorker
 
       captured_at = DateTime.now
 
+      current_floor = token.floor.to_f
+      yesterday_floor = token.stats.where(metric: 'floor').where("DATE(captured_at) = ?", Date.today-1).order(captured_at: :asc).last.value.to_f
+      raw_floor_change = (((yesterday_floor - current_floor) / ((yesterday_floor + current_floor)/2)) * 100).abs
+      if raw_floor_change.nan?
+        floor_change = 0.0
+      else
+        floor_change = current_floor < yesterday_floor ? -raw_floor_change : raw_floor_change
+      end
+      
+      token.floor_change_24h = floor_change.to_f
+
       Stat.insert_all([
         { token_id: token.id, metric: 'floor', value: token.floor, captured_at: captured_at },
         { token_id: token.id, metric: 'median', value: token.median, captured_at: captured_at },
@@ -52,7 +63,8 @@ class SyncTokenWorker
         { token_id: token.id, metric: 'sec_volume_nb', value: token.sec_volume_nb, captured_at: captured_at },
         { token_id: token.id, metric: 'sec_volume_tz_24', value: token.sec_volume_tz_24, captured_at: captured_at },
         { token_id: token.id, metric: 'sec_volume_nb_24', value: token.sec_volume_nb_24, captured_at: captured_at },
-        { token_id: token.id, metric: 'avg_price_24h', value: token.avg_price_24h.to_f, captured_at: captured_at }
+        { token_id: token.id, metric: 'avg_price_24h', value: token.avg_price_24h.to_f, captured_at: captured_at },
+        { token_id: token.id, metric: 'floor_change_24h', value: token.floor_change, captured_at: captured_at }
       ])
     end
       

@@ -21,6 +21,8 @@ class WalletsController < ApplicationController
           'tokens.mint_progress'
         when 'avg_price_24h'
           'tokens.avg_price_24h'
+        when 'floor_change_24h'
+          'tokens.floor_change_24h'
         else
           params[:sort]
         end
