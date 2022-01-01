@@ -51,7 +51,8 @@ class SyncTokenWorker
         { token_id: token.id, metric: 'sec_volume_tz', value: token.sec_volume_tz, captured_at: captured_at },
         { token_id: token.id, metric: 'sec_volume_nb', value: token.sec_volume_nb, captured_at: captured_at },
         { token_id: token.id, metric: 'sec_volume_tz_24', value: token.sec_volume_tz_24, captured_at: captured_at },
-        { token_id: token.id, metric: 'sec_volume_nb_24', value: token.sec_volume_nb_24, captured_at: captured_at }
+        { token_id: token.id, metric: 'sec_volume_nb_24', value: token.sec_volume_nb_24, captured_at: captured_at },
+        { token_id: token.id, metric: 'avg_price_24h', value: token.avg_price_24h.to_f, captured_at: captured_at }
       ])
     end
       
