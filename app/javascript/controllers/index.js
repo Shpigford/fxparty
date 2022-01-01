@@ -4,5 +4,8 @@
 
 import { application } from "./application"
 
+import ColumnFilterController from "./column_filter_controller.js"
+application.register("column-filter", ColumnFilterController)
+
 import NavController from "./nav_controller.js"
 application.register("nav", NavController)
