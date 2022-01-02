@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => "/sidekiq"
 
   resources :wallets, constraints: { id: /[^\/]+/ } do
+    collection do
+      get 'top'
+    end
     member do
       get 'download'
     end

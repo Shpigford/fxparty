@@ -1,5 +1,5 @@
 class WalletsController < ApplicationController
-  before_action :find_wallet
+  before_action :find_wallet, only: [:show, :download]
 
   def show
     if @wallet.status == 'synced'
@@ -67,6 +67,41 @@ class WalletsController < ApplicationController
       end
     end
   end
+
+  def top
+    if params[:sort].present?
+      sort = case params[:sort]
+      when 'address'
+        'address'
+      when 'stat_cost_basis'
+        'stat_cost_basis'
+      when 'stat_floor_value'
+        'stat_floor_value'
+      when 'stat_unrealized_gains'
+        'stat_unrealized_gains'
+      when 'stat_size'
+        'stat_size'
+      else
+        params[:sort]
+      end
+    else
+      sort = 'stat_unrealized_gains'
+    end
+
+    if params[:dir].present?
+      sort_direction = case params[:dir]
+      when 'asc'
+        'asc'
+      else
+        'desc'
+      end
+    else
+      sort_direction = 'desc'
+    end
+
+    @wallets = Wallet.order("#{sort} #{sort_direction} NULLS LAST")
+  end
+  
 
 private
   def find_wallet
