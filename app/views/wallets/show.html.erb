@@ -83,7 +83,7 @@
                   </button>
                 </div>
 
-                <div class="absolute right-0 z-50 hidden p-4 mt-2 origin-top-right bg-white rounded-md shadow-lg w-46 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" data-column-filter-target="options">
+                <div class="absolute right-0 z-30 hidden p-4 mt-2 origin-top-right bg-white rounded-md shadow-lg w-46 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" data-column-filter-target="options">
                   
                   <form class="space-y-4">
                     <% [['Token', 'token'], ['Progress', 'balance'], ['Price Paid', 'last_purchase_price_tz'], ['Floor', 'floor'], ['Floor Change 24h', 'floor_change_24h'], ['Highest Sold', 'highest_sold'], ['Avg Price 24h', 'avg_price_24h'], ['# Sales 24h', 'sec_volume_nb_24']].each_with_index do |filter, index| %>
@@ -106,7 +106,7 @@
             <table class="min-w-full divide-y divide-gray-200 table-fixed">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="sticky top-0 left-0 px-4 py-3 text-xs font-medium text-left text-gray-700 uppercase bg-gray-200 z-50 <%= cell_color_sort(params[:sort], 'item', true) %>">
+                  <th scope="col" class="sticky top-0 left-0 px-4 py-3 text-xs font-medium text-left text-gray-700 uppercase bg-gray-200 z-30 <%= cell_color_sort(params[:sort], 'item', true) %>">
                   <%= heading_link(@wallet.address, 'Item', 'item', 'text', params[:dir], params[:sort]) %>
                   </th>
                   <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'token', true) %>" data-column="token">

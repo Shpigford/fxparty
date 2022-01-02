@@ -20,7 +20,7 @@
                 </button>
               </div>
 
-              <div class="absolute right-0 z-50 hidden p-4 mt-2 origin-top-right bg-white rounded-md shadow-lg w-46 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" data-column-filter-target="options">
+              <div class="absolute right-0 z-30 hidden p-4 mt-2 origin-top-right bg-white rounded-md shadow-lg w-46 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" data-column-filter-target="options">
                   
                 <form class="space-y-4">
                   <% [['Token Name', 'name'], ['Artist', 'artist'], ['Progress', 'balance'], ['Created', 'created_at'], ['Royalties', 'royalties'], ['Floor', 'floor'], ['Floor Change 24h', 'floor_change_24h'], ['Median', 'median'], ['# Listings', 'total_listing'], ['Highest Sold', 'highest_sold'], ['Lowest Sold', 'lowest_sold'], ['Total Sales', 'prim_total'], ['2nd Sales', 'sec_volume_tz'], ['# Sales', 'sec_volume_nb'], ['Avg Price (24)', 'avg_price_24h'], ['2nd Sales (24)', 'sec_volume_tz_24'], ['# Sales (24)', 'sec_volume_nb_24']].each_with_index do |filter, index| %>
@@ -43,7 +43,7 @@
           <table class="min-w-full border table-fixed">
             <thead class="bg-gray-200">
               <tr>
-                <th scope="col" class="sticky left-0 z-50 px-4 py-3 text-xs font-medium text-left text-gray-700 uppercase bg-gray-200 whitespace-nowrap ">
+                <th scope="col" class="sticky left-0 z-30 px-4 py-3 text-xs font-medium text-left text-gray-700 uppercase bg-gray-200 whitespace-nowrap ">
                   <%= heading_link(nil, 'Token ID', 'id', 'number', params[:dir], params[:sort], 'token') %>
                 </th>
                 <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'name', true) %>" data-column="name">
