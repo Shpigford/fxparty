@@ -16,6 +16,9 @@
         <table class="min-w-full border table-fixed">
           <thead class="bg-gray-200">
             <tr>
+              <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                <span class="sr-only">Position</span>
+              </th>
               <th scope="col" class="sticky left-0 z-30 px-4 py-3 text-xs font-medium text-left text-gray-700 uppercase bg-gray-200 whitespace-nowrap ">
                 Address
               </th>
@@ -35,8 +38,11 @@
           </thead>
               
           <tbody>
-            <% @wallets.each do |wallet| %>
+            <% @wallets.each_with_index do |wallet, index| %>
             <tr class="bg-white odd:bg-gray-50">
+              <td class="w-px py-4 text-sm text-center text-gray-400 whitespace-nowrap">
+                <%= index + 1 %>
+              </td>
               <td class="absolute sticky left-0 max-w-xs px-4 py-2 text-sm text-gray-800 truncate bg-white whitespace-nowrap max-w-[15rem]">
                 <%= link_to (wallet.domain.present? ? wallet.domain : wallet.address), wallet_path(wallet.address), class: 'text-blue-600 hover:text-blue-900', target: '_top' %>
               </td>
