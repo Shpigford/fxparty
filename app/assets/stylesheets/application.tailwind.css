@@ -8,6 +8,6 @@
   }
 
   .data-head {
-    @apply px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase whitespace-nowrap;
+    @apply sticky top-0 px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase bg-gray-50 whitespace-nowrap;
   }
 }

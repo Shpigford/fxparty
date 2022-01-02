@@ -1,5 +1,5 @@
 <header class="bg-white shadow">
-  <div class="flex justify-between px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+  <div class="flex justify-between px-4 py-6 mx-auto sm:px-6 lg:px-8">
     <h1 class="text-2xl font-bold text-gray-900">
     <% if @wallet.status == 'synced' %>
       <%= @wallet.domain.present? ? @wallet.domain : @wallet.address %> <span class="text-xs font-light text-gray-400 align-middle">Updated <%= time_ago_in_words @wallet.last_updated_at %> ago</span>
@@ -16,15 +16,15 @@
 </header>
 
 <main>
-  <div class="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+  <div class="mx-auto">
     <div class="flex flex-col">
-      <div class="-my-2 sm:-mx-6 lg:-mx-8">
-        <div class="py-2 align-middle sm:px-6 lg:px-8">
+      <div class="">
+        <div class="">
           
             <% if @wallet.status == 'synced' %>
 
-            <div class="mb-10">
-              <dl class="grid grid-cols-1 mt-5 overflow-hidden bg-white divide-y divide-gray-200 rounded-lg shadow md:grid-cols-4 md:divide-y-0 md:divide-x">
+            <div class="">
+              <dl class="grid grid-cols-1 overflow-hidden bg-white border-t border-b border-gray-200 divide-x divide-gray-200 md:grid-cols-4">
                 <div class="px-4 py-5 sm:p-6">
                   <dt class="text-base font-normal text-gray-900">
                     Portfolio Cost Basis
@@ -71,10 +71,10 @@
               </dl>
             </div>
 
-            <div class="flex flex-row-reverse mb-2" data-controller="column-filter" data-column-filter-type="wallet">
+            <div class="flex flex-row-reverse bg-white border-b" data-controller="column-filter" data-column-filter-type="wallet">
               <div class="relative inline-block text-left">
                 <div>
-                  <button type="button" class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500" id="menu-button" aria-expanded="true" aria-haspopup="true" data-action="click->column-filter#show">
+                  <button type="button" class="inline-flex justify-center w-full px-6 py-4 text-sm font-medium text-gray-700 bg-white border-l border-gray-300 hover:bg-gray-50 focus:outline-none focus:bg-gray-200" id="menu-button" aria-expanded="true" aria-haspopup="true" data-action="click->column-filter#show">
                     <i class="w-5 h-5 mr-2 text-blue-600 fa-duotone fa-table-columns"></i> Columns
                   </button>
                 </div>
@@ -96,13 +96,13 @@
               </div>
             </div>
 
-            <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+            <div class="overflow-hidden border-b border-gray-200 shadow">
             <%= turbo_frame_tag "items" do %>
             <div class="overflow-x-auto" data-controller="column-filter" data-column-filter-type="wallet">
             <table class="min-w-full divide-y divide-gray-200 table-fixed">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="sticky left-0 px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase bg-gray-50 <%= cell_color_sort(params[:sort], 'item', true) %>">
+                  <th scope="col" class="sticky top-0 left-0 px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase bg-gray-50 z-50 <%= cell_color_sort(params[:sort], 'item', true) %>">
                   <%= heading_link(@wallet.address, 'Item', 'item', 'text', params[:dir], params[:sort]) %>
                   </th>
                   <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'token', true) %>" data-column="token">
