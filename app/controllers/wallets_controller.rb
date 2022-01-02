@@ -85,7 +85,7 @@ class WalletsController < ApplicationController
         params[:sort]
       end
     else
-      sort = 'stat_unrealized_gains'
+      sort = 'stat_floor_value'
     end
 
     if params[:dir].present?
