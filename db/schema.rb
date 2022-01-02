@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_01_220153) do
+ActiveRecord::Schema.define(version: 2022_01_02_032232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,10 @@ ActiveRecord::Schema.define(version: 2022_01_01_220153) do
     t.string "status", default: "syncing"
     t.datetime "last_viewed_at", precision: 6
     t.string "domain"
+    t.decimal "stat_cost_basis"
+    t.decimal "stat_floor_value"
+    t.decimal "stat_unrealized_gains"
+    t.integer "stat_size"
   end
 
   add_foreign_key "stats", "tokens"

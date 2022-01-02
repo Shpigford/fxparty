@@ -40,6 +40,8 @@ module WalletsHelper
       wallet_path(address, sort: sort, dir: sort_direction)
     when 'token'
       tokens_path(sort: sort, dir: sort_direction)
+    when 'top'
+      top_wallets_path(sort: sort, dir: sort_direction)
     end
 
     link_to "#{name} <i class='#{full_icon}'></i>".html_safe, path

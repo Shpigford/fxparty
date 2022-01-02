@@ -63,6 +63,17 @@ class SyncWalletWorker
       removed_nfts = Item.where(wallet_id: wallet.id).where.not(id: current_nfts)
       removed_nfts.delete_all
     
+      #######################################################################
+      # Stats
+      #######################################################################
+      items = wallet.items.includes(:token)
+
+      wallet.stat_floor_value = items.sum('tokens.floor')
+      wallet.stat_cost_basis = items.sum(:last_purchase_price_tz)
+      wallet.stat_unrealized_gains = wallet.stat_floor_value - items.sum(:last_purchase_price_tz)
+      wallet.stat_size = items.count
+      wallet.save
+      
     end
   end
 end
