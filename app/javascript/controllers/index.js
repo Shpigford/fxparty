@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import AccountController from "./account_controller.js"
+application.register("account", AccountController)
+
 import ColumnFilterController from "./column_filter_controller.js"
 application.register("column-filter", ColumnFilterController)
 
