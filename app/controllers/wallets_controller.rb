@@ -99,7 +99,7 @@ class WalletsController < ApplicationController
       sort_direction = 'desc'
     end
 
-    @wallets = Wallet.order("#{sort} #{sort_direction} NULLS LAST")
+    @wallets = Wallet.order("#{sort} #{sort_direction} NULLS LAST").limit(250)
   end
   
 
