@@ -106,7 +106,7 @@
                 <td class="absolute sticky left-0 max-w-xs px-4 py-2 text-sm text-gray-800 truncate bg-white whitespace-nowrap">
                   <%= link_to token.fxid, "https://www.fxhash.xyz/marketplace/generative/#{token.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
                 </td>
-                <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'name') %>" data-column="name">
+                <td class="max-w-[15rem] truncate data-cell hidden <%= cell_color_sort(params[:sort], 'name') %>" data-column="name">
                   <%= link_to token.name, "https://www.fxhash.xyz/marketplace/generative/#{token.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
                 </td>
                 <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'artist') %>" data-column="artist">
