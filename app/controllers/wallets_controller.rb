@@ -41,7 +41,7 @@ class WalletsController < ApplicationController
         sort_direction = 'desc'
       end
 
-      @items = @wallet.items.includes(:token).order("#{sort} #{sort_direction} NULLS LAST")
+      @items = @wallet.items.includes(:token).order("#{sort} #{sort_direction} NULLS LAST").limit(500)
 
       @link_sort = sort_direction == 'desc' ? 'asc' : 'desc'
 
