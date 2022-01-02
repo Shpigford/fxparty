@@ -102,7 +102,7 @@
             <table class="min-w-full divide-y divide-gray-200 table-fixed">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="sticky top-0 left-0 px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase bg-gray-50 z-50 <%= cell_color_sort(params[:sort], 'item', true) %>">
+                  <th scope="col" class="sticky top-0 left-0 px-4 py-3 text-xs font-medium text-left text-gray-700 uppercase bg-gray-200 z-50 <%= cell_color_sort(params[:sort], 'item', true) %>">
                   <%= heading_link(@wallet.address, 'Item', 'item', 'text', params[:dir], params[:sort]) %>
                   </th>
                   <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'token', true) %>" data-column="token">
@@ -134,8 +134,8 @@
               
               <tbody>
                 <% @items.each do |item| %>
-                <tr class="bg-white">
-                  <td class="absolute sticky left-0 max-w-xs px-4 py-4 text-sm text-gray-800 truncate bg-white border-r border-gray-200 whitespace-nowrap">
+                <tr class="bg-white odd:bg-gray-50">
+                  <td class="absolute sticky left-0 max-w-xs px-4 py-3 text-sm text-gray-800 truncate bg-white whitespace-nowrap">
                     <%= link_to item.name, "https://www.fxhash.xyz/gentk/#{item.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
                   </td>
                   <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'token') %>" data-column="token">

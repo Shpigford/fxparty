@@ -40,10 +40,10 @@
           <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
           <%= turbo_frame_tag "items" do %>
           <div class="overflow-x-auto" data-controller="column-filter" data-column-filter-type="token">
-          <table class="min-w-full divide-y divide-gray-200 table-fixed">
-            <thead class="bg-gray-50">
+          <table class="min-w-full border table-fixed">
+            <thead class="bg-gray-200">
               <tr>
-                <th scope="col" class="sticky left-0 z-50 px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase bg-gray-50 whitespace-nowrap ">
+                <th scope="col" class="sticky left-0 z-50 px-4 py-3 text-xs font-medium text-left text-gray-700 uppercase bg-gray-200 whitespace-nowrap ">
                   <%= heading_link(nil, 'Token ID', 'id', 'number', params[:dir], params[:sort], 'token') %>
                 </th>
                 <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'name', true) %>" data-column="name">
@@ -102,8 +102,8 @@
               
             <tbody>
               <% @tokens.each do |token| %>
-              <tr class="bg-white">
-                <td class="absolute sticky left-0 max-w-xs px-4 py-4 text-sm text-gray-800 truncate bg-white border-r border-gray-200 whitespace-nowrap">
+              <tr class="bg-white odd:bg-gray-50">
+                <td class="absolute sticky left-0 max-w-xs px-4 py-2 text-sm text-gray-800 truncate bg-white whitespace-nowrap">
                   <%= link_to token.fxid, "https://www.fxhash.xyz/marketplace/generative/#{token.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
                 </td>
                 <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'name') %>" data-column="name">

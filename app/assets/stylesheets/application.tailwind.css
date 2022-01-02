@@ -3,11 +3,15 @@
 @tailwind utilities;
 
 @layer components {
+  table td,
+  table th {
+    @apply border border-gray-100;
+  }
   .data-cell {
-    @apply px-4 py-4 text-sm text-gray-800 whitespace-nowrap;
+    @apply px-4 py-3 text-sm text-gray-800 whitespace-nowrap;
   }
 
   .data-head {
-    @apply sticky top-0 px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase bg-gray-50 whitespace-nowrap;
+    @apply sticky top-0 px-4 py-3 text-xs font-medium text-left text-gray-700 uppercase bg-gray-200 whitespace-nowrap;
   }
 }

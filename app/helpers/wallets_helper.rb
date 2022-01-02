@@ -30,7 +30,7 @@ module WalletsHelper
     end
 
     if cur_sort != sort
-      full_icon = "fa-solid fa-arrow-down-arrow-up text-gray-300"
+      full_icon = "fa-solid fa-arrow-down-arrow-up text-gray-500"
     else
       full_icon = "fa-duotone #{icon}"
     end
