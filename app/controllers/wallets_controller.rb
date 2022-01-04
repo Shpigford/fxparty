@@ -1,5 +1,5 @@
 class WalletsController < ApplicationController
-  before_action :find_wallet, only: [:show, :download]
+  before_action :find_wallet, only: [:show, :download, :refresh]
 
   def show
     if @wallet.status == 'synced'
@@ -56,6 +56,16 @@ class WalletsController < ApplicationController
       @wallet.save
     end
   end
+
+  def refresh
+    @wallet.status = 'syncing'
+    @wallet.save
+
+    SyncWalletWorker.perform_async(@wallet.address)
+
+    redirect_to wallet_path(@wallet.address)
+  end
+  
 
   def download
     @items = @wallet.items.includes(:token).order(last_purchase_price_tz: :desc)

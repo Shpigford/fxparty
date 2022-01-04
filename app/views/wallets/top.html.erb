@@ -44,7 +44,7 @@
                 <%= index + 1 %>
               </td>
               <td class="absolute sticky left-0 max-w-xs px-4 py-2 text-sm text-gray-800 truncate bg-white whitespace-nowrap max-w-[15rem]">
-                <%= link_to (wallet.domain.present? ? wallet.domain : wallet.address), wallet_path(wallet.address), class: 'text-blue-600 hover:text-blue-900', target: '_top' %>
+                <%= link_to (wallet.domain.present? ? wallet.domain : wallet.address.truncate(17, omission: "…#{wallet.address.last(8)}")), wallet_path(wallet.address), class: 'text-blue-600 hover:text-blue-900', target: '_top' %>
               </td>
               <td class="data-cell <%= cell_color_sort(params[:sort], 'stat_cost_basis') %>">
                 <%= display_tez wallet.stat_cost_basis %>

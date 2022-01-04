@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     end
     member do
       get 'download'
+      get 'refresh'
     end
   end
 
