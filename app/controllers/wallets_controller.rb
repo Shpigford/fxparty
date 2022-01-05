@@ -93,6 +93,8 @@ class WalletsController < ApplicationController
         'stat_unrealized_gains'
       when 'stat_size'
         'stat_size'
+      when 'stat_sec_avg_recent'
+        'stat_sec_avg_recent'
       else
         params[:sort]
       end
