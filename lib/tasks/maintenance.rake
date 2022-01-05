@@ -15,4 +15,25 @@ namespace :maintenance do
       SyncWalletWorker.perform_async(wallet.address)
     end
   end
+
+  desc "Mass wallet import"
+  task :wallet_import => :environment do
+    updates = HTTParty.get("https://api.tzkt.io/v1/bigmaps/updates?contract=KT1KEa8z6vWXDJrVqtMrAeDVzsvxat3kHaCE&sort.asc=id&limit=10000&bigmap=22785").body
+    transactions = JSON.parse(updates)
+
+    addresses = []
+
+    transactions.each do |transaction|
+      addresses.push(transaction['content']['key']['address']) if transaction['content'].present? and transaction['content']['key']['address'].present?  
+    end
+
+    addresses = addresses.uniq
+
+    existing_addresses = Wallet.where(address: addresses).pluck(:address)
+    missing_addresses = (addresses - existing_addresses).uniq
+
+      missing_addresses.each do |address|
+      SyncWalletWorker.perform_async(address) 
+    end
+  end
 end
