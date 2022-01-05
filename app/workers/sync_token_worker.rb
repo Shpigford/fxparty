@@ -66,10 +66,10 @@ class SyncTokenWorker
         { token_id: token.id, metric: 'avg_price_24h', value: token.avg_price_24h.to_f, captured_at: captured_at },
         { token_id: token.id, metric: 'floor_change_24h', value: token.floor_change, captured_at: captured_at }
       ])
+
+      ProcessAvgSecWorker.perform_async(token.fxid)
     end
       
     token.save
-
-    ProcessAvgSecWorker.perform_async(token.fxid)
   end
 end

@@ -24,14 +24,14 @@
             <% if @wallet.status == 'synced' %>
 
             <div class="">
-              <dl class="grid grid-cols-1 overflow-hidden bg-white border-t border-b border-gray-200 divide-x divide-gray-200 md:grid-cols-4">
+              <dl class="grid grid-cols-1 overflow-hidden bg-white border-t border-b border-gray-200 divide-x divide-gray-200 md:grid-cols-5">
                 <div class="px-4 py-5 sm:p-6">
                   <dt class="text-base font-normal text-gray-900">
                     Portfolio Cost Basis
                   </dt>
                   <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-blue-600">
-                      <%= display_tez @cost_basis %>
+                      <%= display_tez @wallet.stat_cost_basis %>
                     </div>
                   </dd>
                 </div>
@@ -42,7 +42,7 @@
                   </dt>
                   <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-blue-600">
-                      <%= display_tez @floor_value %>
+                      <%= display_tez @wallet.stat_floor_value %>
                     </div>
                   </dd>
                 </div>
@@ -53,8 +53,20 @@
                   </dt>
                   <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
                     <div class="flex items-baseline text-2xl font-semibold text-blue-600">
-                      <span class="<%= @unrealized > 0 ? 'text-green-500' : 'text-red-500' %>"><%= display_tez @unrealized %></span>
+                      <span class="<%= @wallet.stat_unrealized_gains > 0 ? 'text-green-500' : 'text-red-500' %>"><%= display_tez @wallet.stat_unrealized_gains %></span>
                     </div>
+                  </dd>
+                </div>
+
+                <div class="px-4 py-5 sm:p-6">
+                  <dt class="text-base font-normal text-gray-900">
+                    Potential Value
+                  </dt>
+                  <dd class="items-baseline mt-1 md:block">
+                    <div class="items-baseline text-2xl font-semibold text-blue-600">
+                      <%= display_tez @wallet.stat_sec_avg_recent %>
+                    </div>
+                    <div class="block text-xs text-gray-400">Based on average of recent sales</div>
                   </dd>
                 </div>
 
@@ -82,7 +94,7 @@
                 <div class="absolute right-0 z-30 hidden p-4 mt-2 origin-top-right bg-white rounded-md shadow-lg w-46 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" data-column-filter-target="options">
                   
                   <form class="space-y-4">
-                    <% [['Token', 'token'], ['Progress', 'balance'], ['Price Paid', 'last_purchase_price_tz'], ['Floor', 'floor'], ['Floor Change 24h', 'floor_change_24h'], ['Highest Sold', 'highest_sold'], ['Avg Price 24h', 'avg_price_24h'], ['# Sales 24h', 'sec_volume_nb_24']].each_with_index do |filter, index| %>
+                    <% [['Token', 'token'], ['Progress', 'balance'], ['Price Paid', 'last_purchase_price_tz'], ['Floor', 'floor'], ['Floor Change 24h', 'floor_change_24h'], ['Recent Sales (Avg)', 'sec_avg_recent'], ['Highest Sold', 'highest_sold'], ['Avg Price 24h', 'avg_price_24h'], ['# Sales 24h', 'sec_volume_nb_24']].each_with_index do |filter, index| %>
                       <div class="flex items-center">
                         <input id="filter-<%= index %>" name="filter" value="<%= filter[1] %>" type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" data-action="click->column-filter#filter" data-column-filter-target="filters">
                         <label for="filter-<%= index %>" class="pr-6 ml-3 text-sm font-medium text-gray-900 whitespace-nowrap">
@@ -119,6 +131,9 @@
                   </th>
                   <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'floor_change_24h', true) %>" data-column="floor_change_24h">
                     <%= heading_link(@wallet.address, 'Floor Change 24h', 'floor_change_24h', 'number', params[:dir], params[:sort]) %>
+                  </th>
+                  <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'sec_avg_recent', true) %>" data-column="sec_avg_recent">
+                    <%= heading_link(@wallet.address, 'Recent Sales (Avg)', 'sec_avg_recent', 'number', params[:dir], params[:sort]) %>
                   </th>
                   <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'highest_sold', true) %>" data-column="highest_sold">
                     <%= heading_link(@wallet.address, 'Highest Sold', 'highest_sold', 'number', params[:dir], params[:sort]) %>
@@ -177,6 +192,14 @@
                       end
                     %>
                     <span class=<%= floor_change_color %>><%= number_to_percentage item.token.floor_change_24h, precision: 1 %></span>
+                  </td>
+                  <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'sec_avg_recent') %>" data-column="sec_avg_recent">
+                    <% if item.last_purchase_price_tz.present? %>
+                    <% 
+                      sec_avg_recent_color = item.token.sec_avg_recent.to_f > item.last_purchase_price_tz.to_f ? 'text-green-500' : 'text-red-500'
+                    %>
+                    <%= item.token.sec_avg_recent.present? ? "<span class='#{sec_avg_recent_color}'>#{display_tez item.token.sec_avg_recent}</span>".html_safe : "<span class='text-gray-200'>—</span>".html_safe %>
+                    <% end %>
                   </td>
                   <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'highest_sold') %>" data-column="highest_sold">
                     <%= item.token.highest_sold.present? ? display_tez(item.token.highest_sold) : "<span class='text-gray-200'>—</span>".html_safe %>
