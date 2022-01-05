@@ -6,7 +6,7 @@ class SyncTokensWorker
     tzkt_token = JSON.parse(tzkt_token)
     total_tokens = tzkt_token.first['key'].to_i
 
-    (0..total_tokens).each do |n|
+      (total_tokens).downto(0).each do |n|
       SyncTokenWorker.perform_async(n)
     end
   end
