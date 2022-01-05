@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_02_032232) do
+ActiveRecord::Schema.define(version: 2022_01_05_024217) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 2022_01_02_032232) do
     t.decimal "mint_progress"
     t.decimal "avg_price_24h"
     t.decimal "floor_change_24h", default: "0.0"
+    t.decimal "sec_avg_recent", default: "0.0"
   end
 
   create_table "wallets", force: :cascade do |t|
@@ -79,6 +80,7 @@ ActiveRecord::Schema.define(version: 2022_01_02_032232) do
     t.decimal "stat_floor_value"
     t.decimal "stat_unrealized_gains"
     t.integer "stat_size"
+    t.decimal "stat_sec_avg_recent", default: "0.0"
   end
 
   add_foreign_key "stats", "tokens"

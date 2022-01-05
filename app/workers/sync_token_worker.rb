@@ -69,5 +69,7 @@ class SyncTokenWorker
     end
       
     token.save
+
+    ProcessAvgSecWorker.perform_async(token.fxid)
   end
 end

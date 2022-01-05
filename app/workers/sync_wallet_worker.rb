@@ -69,6 +69,7 @@ class SyncWalletWorker
       items = wallet.items.includes(:token)
 
       wallet.stat_floor_value = items.sum('tokens.floor')
+      wallet.stat_sec_avg_recent = items.sum('tokens.sec_avg_recent')
       wallet.stat_cost_basis = items.sum(:last_purchase_price_tz)
       wallet.stat_unrealized_gains = wallet.stat_floor_value - items.sum(:last_purchase_price_tz)
       wallet.stat_size = items.count
