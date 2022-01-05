@@ -27,34 +27,25 @@
               <dl class="grid grid-cols-1 overflow-hidden bg-white border-t border-b border-gray-200 divide-x divide-gray-200 md:grid-cols-5">
                 <div class="px-4 py-5 sm:p-6">
                   <dt class="text-base font-normal text-gray-900">
-                    Portfolio Cost Basis
+                    Cost Basis
                   </dt>
-                  <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
-                    <div class="flex items-baseline text-2xl font-semibold text-blue-600">
+                  <dd class="items-baseline justify-between mt-1 md:block">
+                    <div class="items-baseline text-2xl font-semibold text-blue-600 ">
                       <%= display_tez @wallet.stat_cost_basis %>
                     </div>
+                    <div class="block text-xs text-gray-400">Mint/purchase cost</div>
                   </dd>
                 </div>
 
                 <div class="px-4 py-5 sm:p-6">
                   <dt class="text-base font-normal text-gray-900">
-                    Portfolio Floor Value
+                    Floor Value
                   </dt>
-                  <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
-                    <div class="flex items-baseline text-2xl font-semibold text-blue-600">
+                  <dd class="items-baseline justify-between mt-1 md:block">
+                    <div class="items-baseline text-2xl font-semibold text-blue-600">
                       <%= display_tez @wallet.stat_floor_value %>
                     </div>
-                  </dd>
-                </div>
-
-                <div class="px-4 py-5 sm:p-6">
-                  <dt class="text-base font-normal text-gray-900">
-                    Unrealized Gains/Losses
-                  </dt>
-                  <dd class="flex items-baseline justify-between mt-1 md:block lg:flex">
-                    <div class="flex items-baseline text-2xl font-semibold text-blue-600">
-                      <span class="<%= @wallet.stat_unrealized_gains > 0 ? 'text-green-500' : 'text-red-500' %>"><%= display_tez @wallet.stat_unrealized_gains %></span>
-                    </div>
+                    <div class="block text-xs text-gray-400">Based on token floor values</div>
                   </dd>
                 </div>
 
@@ -66,7 +57,19 @@
                     <div class="items-baseline text-2xl font-semibold text-blue-600">
                       <%= display_tez @wallet.stat_sec_avg_recent %>
                     </div>
-                    <div class="block text-xs text-gray-400">Based on average of recent sales</div>
+                    <div class="block text-xs text-gray-400">Based on average recent sales</div>
+                  </dd>
+                </div>
+
+                <div class="px-4 py-5 sm:p-6">
+                  <dt class="text-base font-normal text-gray-900">
+                    Unrealized Gains/Losses
+                  </dt>
+                  <dd class="items-baseline justify-between mt-1 md:block">
+                    <div class="items-baseline text-2xl font-semibold text-blue-600">
+                      <span class="<%= @wallet.stat_unrealized_gains > 0 ? 'text-green-500' : 'text-red-500' %>"><%= display_tez @wallet.stat_unrealized_gains %></span>
+                    </div>
+                    <div class="block text-xs text-gray-400">Floor value - cost basis</div>
                   </dd>
                 </div>
 
