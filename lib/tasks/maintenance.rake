@@ -4,6 +4,11 @@ namespace :maintenance do
     SyncTokensWorker.perform_async
   end
 
+  desc "Get new tokens"
+  task :new_tokens => :environment do
+    GetNewTokensWorker.perform_async
+  end
+
   desc "Update wallets"
   task :update_wallets => :environment do
     # Only process a set % of oldest updated wallets
