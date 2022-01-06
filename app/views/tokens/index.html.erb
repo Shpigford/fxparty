@@ -127,7 +127,7 @@
                   </div>
                 </td>
                 <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'created_at') %>" data-column="created_at">
-                  <%= token.created_at.strftime("%m-%-e-%y %H:%M") %>
+                  <%= token.created_at.strftime("%b %-e, %Y %H:%M") %>
                 </td>
                 <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'royalties') %>" data-column="royalties">
                   <%= (token.royalties.to_f / 10).to_s.sub(/\.?0+$/, '') %>%

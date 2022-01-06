@@ -179,7 +179,7 @@
                   <% end %>
                   </td>
                   <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'last_purchase_at') %>" data-column="last_purchase_at">
-                    <%= item.last_purchase_at.strftime("%m-%-e-%y %H:%M") if item.last_purchase_at.present? %>
+                    <%= item.last_purchase_at.strftime("%b %-e, %Y %H:%M") if item.last_purchase_at.present? %>
                   </td>
                   <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'floor') %>" data-column="floor">
                     <% if item.last_purchase_price_tz.present? %>
