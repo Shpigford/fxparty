@@ -1,7 +1,14 @@
 namespace :maintenance do
   desc "Update tokens"
   task :update_tokens => :environment do
-    SyncTokensWorker.perform_async
+    # Only process a set % of oldest updated tokens
+    total_tokens = Token.active.count
+    limit = (0.25 * total_tokens).ceil
+    tokens = Token.active.order('updated_at ASC NULLS FIRST').limit(limit)
+
+    tokens.each do |token|
+      SyncTokenWorker.perform_async(token.fxid)
+    end
   end
 
   desc "Get new tokens"
