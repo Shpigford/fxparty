@@ -97,7 +97,7 @@
                 <div class="absolute right-0 z-30 hidden p-4 mt-2 origin-top-right bg-white rounded-md shadow-lg w-46 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" data-column-filter-target="options">
                   
                   <form class="space-y-4">
-                    <% [['Token', 'token'], ['Progress', 'balance'], ['Price Paid', 'last_purchase_price_tz'], ['Purchased', 'last_purchase_at'], ['Floor', 'floor'], ['Floor Change 24h', 'floor_change_24h'], ['Recent Sales (Avg)', 'sec_avg_recent'], ['Highest Sold', 'highest_sold'], ['Avg Price 24h', 'avg_price_24h'], ['# Sales 24h', 'sec_volume_nb_24']].each_with_index do |filter, index| %>
+                    <% [['Token', 'token'], ['Progress', 'balance'], ['Price Paid', 'last_purchase_price_tz'], ['Purchased On', 'last_purchase_at'], ['Floor', 'floor'], ['Floor Change 24h', 'floor_change_24h'], ['Recent Sales (Avg)', 'sec_avg_recent'], ['Highest Sold', 'highest_sold'], ['Avg Price 24h', 'avg_price_24h'], ['# Sales 24h', 'sec_volume_nb_24']].each_with_index do |filter, index| %>
                       <div class="flex items-center">
                         <input id="filter-<%= index %>" name="filter" value="<%= filter[1] %>" type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" data-action="click->column-filter#filter" data-column-filter-target="filters">
                         <label for="filter-<%= index %>" class="pr-6 ml-3 text-sm font-medium text-gray-900 whitespace-nowrap">
@@ -130,7 +130,7 @@
                     <%= heading_link(@wallet.address, 'Price Paid', 'last_purchase_price_tz', 'number', params[:dir], params[:sort]) %>
                   </th>
                   <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'last_purchase_at', true) %>" data-column="last_purchase_at">
-                    <%= heading_link(@wallet.address, 'Purchased', 'last_purchase_at', 'number', params[:dir], params[:sort]) %>
+                    <%= heading_link(@wallet.address, 'Purchased On', 'last_purchase_at', 'number', params[:dir], params[:sort]) %>
                   </th>
                   <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'floor', true) %>" data-column="floor">
                     <%= heading_link(@wallet.address, 'Floor', 'floor', 'number', params[:dir], params[:sort]) %>
