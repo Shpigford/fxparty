@@ -25,11 +25,13 @@ class WalletsController < ApplicationController
           'tokens.floor_change_24h'
         when 'sec_avg_recent'
           'tokens.sec_avg_recent'
+        when 'last_purchase_at'
+          'last_purchase_at'
         else
           params[:sort]
         end
       else
-        sort = 'last_purchase_price_tz'
+        sort = 'last_purchase_at'
       end
 
       if params[:dir].present?

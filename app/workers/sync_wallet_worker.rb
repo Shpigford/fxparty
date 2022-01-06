@@ -43,6 +43,7 @@ class SyncWalletWorker
             fx_asset['actions'].each do |action|
               if (action['type'] == 'MINTED_FROM' or action['type'] == 'OFFER_ACCEPTED') and price_found == false
                 asset.last_purchase_price_tz = action['metadata']['price'].to_i
+                asset.last_purchase_at = action['createdAt'].to_datetime
                 price_found = true
               end
             end

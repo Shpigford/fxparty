@@ -12,7 +12,7 @@ export default class extends Controller {
     const type = this.data.get("type")
 
     if (type === 'wallet' && localStorage.getItem("wallet_columns") === null) {
-      localStorage.setItem('wallet_columns', 'token,balance,last_purchase_price_tz,floor,floor_change_24,sec_avg_recent,highest_sold,avg_price_24h,sec_volume_nb_24')
+      localStorage.setItem('wallet_columns', 'token,balance,last_purchase_price_tz,last_purchase_at,floor,floor_change_24,sec_avg_recent,highest_sold,avg_price_24h,sec_volume_nb_24')
     } else if (type === 'token' && localStorage.getItem("token_columns") === null) {
       localStorage.setItem('token_columns', 'name,artist,balance,created_at,royalties,floor,floor_change_24h,sec_avg_recent,median,total_listing,highest_sold,lowest_sold,prim_total,sec_volume_tz,sec_volume_nb,avg_price_24h,sec_volume_tz_24,sec_volume_nb_24')
     }
