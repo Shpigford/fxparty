@@ -1,6 +1,8 @@
 class SyncTokenWorker
   include Sidekiq::Worker
 
+  sidekiq_options queue: :slow, lock: :while_executing, on_conflict: :reject
+
   def perform(token_id)
     token = Token.find_or_create_by(fxid: token_id)
 

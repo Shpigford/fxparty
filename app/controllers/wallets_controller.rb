@@ -63,7 +63,7 @@ class WalletsController < ApplicationController
     @wallet.status = 'syncing'
     @wallet.save
 
-    SyncWalletWorker.perform_async(@wallet.address)
+    SyncWalletWorker.set(queue: :critical).perform_async(@wallet.address)
 
     redirect_to wallet_path(@wallet.address)
   end
