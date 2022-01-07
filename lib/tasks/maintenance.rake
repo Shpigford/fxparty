@@ -28,6 +28,15 @@ namespace :maintenance do
     end
   end
 
+  desc "Update top wallets"
+  task :update_top_wallets => :environment do
+    wallets = Wallet.active.tracked
+
+    wallets.each do |wallet|
+      SyncWalletWorker.perform_async(wallet.address)
+    end
+  end
+
   desc "Mass wallet import"
   task :wallet_import => :environment do
     updates = HTTParty.get("https://api.tzkt.io/v1/bigmaps/updates?contract=KT1KEa8z6vWXDJrVqtMrAeDVzsvxat3kHaCE&sort.asc=id&limit=10000&bigmap=22785").body
