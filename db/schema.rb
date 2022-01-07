@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_06_220310) do
+ActiveRecord::Schema.define(version: 2022_01_06_223656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,8 @@ ActiveRecord::Schema.define(version: 2022_01_06_220310) do
     t.decimal "avg_price_24h"
     t.decimal "floor_change_24h", default: "0.0"
     t.decimal "sec_avg_recent", default: "0.0"
+    t.decimal "floor_royalties", default: "0.0"
+    t.decimal "potential_royalties", default: "0.0"
   end
 
   create_table "wallets", force: :cascade do |t|

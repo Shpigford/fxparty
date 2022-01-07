@@ -41,6 +41,9 @@ class SyncTokenWorker
 
       token.delisted = false
 
+      #######################################################################
+      # 24h floor change
+      #######################################################################
       if token.stats.where(metric: 'floor').where("DATE(captured_at) = ?", Date.today-1).order(captured_at: :asc).present?
         captured_at = DateTime.now
 
@@ -56,6 +59,24 @@ class SyncTokenWorker
         token.floor_change_24h = floor_change.to_f
       else
         token.floor_change_24h = 0
+      end
+
+      #######################################################################
+      # Floor royalties
+      #######################################################################
+      if token.floor.to_f == 0 or token.royalties.to_f == 0
+        token.floor_royalties = 0
+      else
+        token.floor_royalties = (token.floor.to_f * (token.royalties.to_f / 1000))
+      end
+
+      #######################################################################
+      # Avg recent sales royalties
+      #######################################################################
+      if token.sec_avg_recent.to_f == 0 or token.royalties.to_f == 0
+        token.potential_royalties = 0
+      else
+        token.potential_royalties = (token.sec_avg_recent.to_f * (token.royalties.to_f / 1000))
       end
 
       Stat.insert_all([
