@@ -123,6 +123,9 @@ class WalletsController < ApplicationController
     @items = Item.order('last_purchase_at desc').where(wallet_id: @wallets).where.not(last_purchase_at: nil).limit(100)
   end
   
+  def hefty
+    @items = Item.where('last_purchase_price_tz >= ?', 50000000).order('last_purchase_at desc').limit(100)
+  end
   
 
 private

@@ -1,17 +1,17 @@
 <header class="bg-white shadow">
   <div class="flex justify-between px-4 py-6 mx-auto sm:px-6 lg:px-8">
     <h1 class="text-2xl font-bold text-gray-900">
-    Feed of Top Wallets
+    Feed of Hefty Purchases (>50tz)
     </h1>
   </div>
 
   <div class="mb-5 border-t border-b border-gray-200">
     <nav class="flex -mb-px" aria-label="Tabs">
-      <a href="/wallets/feed" class="w-1/2 px-1 py-4 text-lg font-bold text-center text-blue-600 border-b-2 border-blue-500" aria-current="page">
+      <a href="/wallets/feed" class="w-1/2 px-1 py-4 text-lg font-bold text-center text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300">
         Top Wallets
       </a>
 
-      <a href="/wallets/hefty" class="w-1/2 px-1 py-4 text-lg font-bold text-center text-gray-500 border-b-2 border-transparent hover:text-gray-700 hover:border-gray-300">
+      <a href="/wallets/hefty" class="w-1/2 px-1 py-4 text-lg font-bold text-center text-blue-600 border-b-2 border-blue-500" aria-current="page">
         Hefty Purcahses
       </a>
     </nav>
@@ -31,7 +31,9 @@
         <h2 class="text-2xl font-bold text-gray-900 truncate"><%= link_to item.name, "https://www.fxhash.xyz/marketplace/generative/#{item.token.fxid}", class: 'hover:underline' %></h2>
         <div class="mb-12 text-sm text-gray-400">by <a href="https://www.fxhash.xyz/pkh/<%= item.token.author_address %>" class="hover:underline"><%= image_tag ipfs_image(item.token.author_avatar), class: "-mt-0.5 mr-1 inline rounded-full w-5 h-5" if item.token.author_avatar.present? %><%= item.token.author_name %></a></div>
 
+        <% if item.wallet.present? and item.last_purchase_at.present? %>
         <div class="absolute text-sm font-medium leading-tight text-gray-500 truncate bottom-5 sm:text-base dark:text-gray-400">Purchased by <%= link_to address(item.wallet), wallet_path(item.wallet.address), class: 'hover:underline font-bold text-blue-700' %> <span class=""><%= time_ago_in_words item.last_purchase_at %> ago</span></div>
+        <% end %>
       </div>
     </div>
   </div>
