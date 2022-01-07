@@ -29,7 +29,7 @@
         <div class="float-right mt-2"><span class="px-4 py-2 font-bold text-green-700 bg-green-200 rounded-full"><%= display_tez item.last_purchase_price_tz %></span></div>
 
         <h2 class="text-2xl font-bold text-gray-900 truncate"><%= link_to item.name, "https://www.fxhash.xyz/gentk/#{item.fxid}", class: 'hover:underline' %></h2>
-        <div class="mb-12 text-sm text-gray-400">by <a href="https://www.fxhash.xyz/pkh/<%= item.token.author_address %>" class="hover:underline"><%= image_tag ipfs_image(item.token.author_avatar), class: "-mt-0.5 mr-1 inline rounded-full w-5 h-5" if item.token.author_avatar.present? %><%= item.token.author_name %></a></div>
+        <div class="mb-12 text-sm text-gray-400">by <a href="https://www.fxhash.xyz/pkh/<%= item.token.author_address %>" class="text-blue-700 hover:underline"><%= image_tag ipfs_image(item.token.author_avatar), class: "-mt-0.5 mr-1 inline rounded-full w-5 h-5" if item.token.author_avatar.present? %><%= item.token.author_name %></a> from <%= link_to item.token.name, "https://www.fxhash.xyz/generative/#{item.token.fxid}", class: 'text-blue-700 hover:underline' %></div>
 
         <% if item.wallet.present? and item.last_purchase_at.present? %>
         <div class="absolute text-sm font-medium leading-tight text-gray-500 truncate bottom-5 sm:text-base dark:text-gray-400">Purchased by <%= link_to address(item.wallet), wallet_path(item.wallet.address), class: 'hover:underline font-bold text-blue-700' %> <span class=""><%= time_ago_in_words item.last_purchase_at %> ago</span></div>
