@@ -33,7 +33,7 @@ namespace :maintenance do
     wallets = Wallet.active.tracked
 
     wallets.each do |wallet|
-      SyncWalletWorker.perform_async(wallet.address)
+      SyncWalletWorker.set(queue: :critical).perform_async(wallet.address)
     end
   end
 
