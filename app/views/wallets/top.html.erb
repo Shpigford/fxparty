@@ -28,11 +28,11 @@
               <th scope="col" class="data-head number  <%= cell_color_sort(params[:sort], 'stat_floor_value', true) %>">
                 <%= heading_link(nil, 'Floor Value', 'stat_floor_value', 'number', params[:dir], params[:sort], 'top') %>
               </th>
-              <th scope="col" class="data-head number  <%= cell_color_sort(params[:sort], 'stat_unrealized_gains', true) %>">
-                <%= heading_link(nil, 'Unrealized Gains', 'stat_unrealized_gains', 'number', params[:dir], params[:sort], 'top') %>
-              </th>
               <th scope="col" class="data-head number  <%= cell_color_sort(params[:sort], 'stat_sec_avg_recent', true) %>">
                 <%= heading_link(nil, 'Potential Value', 'stat_sec_avg_recent', 'number', params[:dir], params[:sort], 'top') %>
+              </th>
+              <th scope="col" class="data-head number  <%= cell_color_sort(params[:sort], 'stat_unrealized_gains', true) %>">
+                <%= heading_link(nil, 'Unrealized Gains', 'stat_unrealized_gains', 'number', params[:dir], params[:sort], 'top') %>
               </th>
               <th scope="col" class="data-head number  <%= cell_color_sort(params[:sort], 'stat_size', true) %>">
                 <%= heading_link(nil, 'Portfolio Size', 'stat_size', 'number', params[:dir], params[:sort], 'top') %>
@@ -55,11 +55,11 @@
               <td class="data-cell <%= cell_color_sort(params[:sort], 'stat_floor_value') %>">
                 <%= display_tez wallet.stat_floor_value %>
               </td>
-              <td class="data-cell <%= cell_color_sort(params[:sort], 'stat_unrealized_gains') %>">
-                <span class="<%= wallet.stat_unrealized_gains.to_f > 0 ? 'text-green-500' : 'text-red-500' %>"><%= display_tez wallet.stat_unrealized_gains %></span>
-              </td>
               <td class="data-cell <%= cell_color_sort(params[:sort], 'stat_sec_avg_recent') %>">
                 <span class="<%= wallet.stat_sec_avg_recent.to_f > 0 ? 'text-green-500' : 'text-red-500' %>"><%= display_tez wallet.stat_sec_avg_recent %></span>
+              </td>
+              <td class="data-cell <%= cell_color_sort(params[:sort], 'stat_unrealized_gains') %>">
+                <span class="<%= wallet.stat_unrealized_gains.to_f > 0 ? 'text-green-500' : 'text-red-500' %>"><%= display_tez wallet.stat_unrealized_gains %></span>
               </td>
               <td class="data-cell <%= cell_color_sort(params[:sort], 'stat_size') %>">
                 <%= wallet.stat_size %>

@@ -101,7 +101,7 @@ class WalletsController < ApplicationController
         params[:sort]
       end
     else
-      sort = 'stat_floor_value'
+      sort = 'stat_sec_avg_recent'
     end
 
     if params[:dir].present?
