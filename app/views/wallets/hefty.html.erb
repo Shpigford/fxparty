@@ -23,12 +23,12 @@
   <% @items.each do |item| %>
   <div class="p-4 rounded-lg">
     <div class="relative flex items-start gap-6 overflow-hidden bg-white rounded-lg shadow-lg ring-1 ring-black/5">
-      <%= link_to image_tag(ipfs_image(item.image_url), class: 'w-56 h-56'), "https://www.fxhash.xyz/marketplace/generative/#{item.token.fxid}" %>
+      <%= link_to image_tag(ipfs_image(item.image_url), class: 'w-56 h-56'), "https://www.fxhash.xyz/gentk/#{item.fxid}" %>
 
       <div class="py-5 pr-5 grow">
         <div class="float-right mt-2"><span class="px-4 py-2 font-bold text-green-700 bg-green-200 rounded-full"><%= display_tez item.last_purchase_price_tz %></span></div>
 
-        <h2 class="text-2xl font-bold text-gray-900 truncate"><%= link_to item.name, "https://www.fxhash.xyz/marketplace/generative/#{item.token.fxid}", class: 'hover:underline' %></h2>
+        <h2 class="text-2xl font-bold text-gray-900 truncate"><%= link_to item.name, "https://www.fxhash.xyz/gentk/#{item.fxid}", class: 'hover:underline' %></h2>
         <div class="mb-12 text-sm text-gray-400">by <a href="https://www.fxhash.xyz/pkh/<%= item.token.author_address %>" class="hover:underline"><%= image_tag ipfs_image(item.token.author_avatar), class: "-mt-0.5 mr-1 inline rounded-full w-5 h-5" if item.token.author_avatar.present? %><%= item.token.author_name %></a></div>
 
         <% if item.wallet.present? and item.last_purchase_at.present? %>
