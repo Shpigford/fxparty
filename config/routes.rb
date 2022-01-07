@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :wallets, constraints: { id: /[^\/]+/ } do
     collection do
       get 'top'
+      get 'feed'
     end
     member do
       get 'download'

@@ -117,6 +117,12 @@ class WalletsController < ApplicationController
 
     @wallets = Wallet.order("#{sort} #{sort_direction} NULLS LAST").limit(250)
   end
+
+  def feed
+    @wallets = Wallet.active.tracked.pluck(:id)
+    @items = Item.order('last_purchase_at desc').where(wallet_id: @wallets).where.not(last_purchase_at: nil).limit(100)
+  end
+  
   
 
 private

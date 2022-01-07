@@ -1,4 +1,10 @@
 module WalletsHelper
+
+  def address(wallet)
+    wallet.domain.present? ? wallet.domain : wallet.address.truncate(17, omission: "…#{wallet.address.last(8)}")
+  end
+  
+
   def sort_icon(type='text', current_direction)
     type = case type
     when 'text'
