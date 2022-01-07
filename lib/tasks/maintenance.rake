@@ -16,6 +16,13 @@ namespace :maintenance do
     GetNewTokensWorker.perform_async
   end
 
+  desc "Check Tezos Domains"
+  task :check_tezos_domains => :environment do
+    Wallet.active.where(domain: nil).find_each do |wallet|
+      CheckTezDomainsWorker.perform_async(wallet.address)
+    end
+  end
+
   desc "Update wallets"
   task :update_wallets => :environment do
     # Only process a set % of oldest updated wallets
