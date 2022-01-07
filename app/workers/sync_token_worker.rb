@@ -94,6 +94,8 @@ class SyncTokenWorker
         { token_id: token.id, metric: 'floor_change_24h', value: token.floor_change_24h, captured_at: captured_at }
       ])
 
+      token.updated_at = Time.now
+
       ProcessAvgSecWorker.perform_async(token.fxid)
     end
       

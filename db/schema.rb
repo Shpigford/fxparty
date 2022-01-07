@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_06_223656) do
+ActiveRecord::Schema.define(version: 2022_01_07_015150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,8 @@ ActiveRecord::Schema.define(version: 2022_01_06_223656) do
     t.decimal "stat_unrealized_gains"
     t.integer "stat_size"
     t.decimal "stat_sec_avg_recent", default: "0.0"
+    t.decimal "stat_floor_royalties", default: "0.0"
+    t.decimal "stat_potential_royalties", default: "0.0"
   end
 
   add_foreign_key "stats", "tokens"
