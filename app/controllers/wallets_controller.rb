@@ -124,7 +124,7 @@ class WalletsController < ApplicationController
   end
   
   def hefty
-    @items = Item.where('last_purchase_price_tz >= ?', 50000000).order('last_purchase_at desc').limit(100)
+    @items = Item.where('last_purchase_price_tz >= ?', 50000000).order('last_purchase_at desc NULLS LAST').limit(100)
   end
   
 
