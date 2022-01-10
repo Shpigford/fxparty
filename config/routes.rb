@@ -15,7 +15,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :tokens
+  resources :tokens do
+    collection do
+      get 'deals'
+    end
+  end
   
   get '/search', to: 'pages#search', as: 'search'
 
