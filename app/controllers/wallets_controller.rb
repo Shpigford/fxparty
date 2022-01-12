@@ -132,7 +132,7 @@ private
   def find_wallet
     if params['id'] =~ /^tz([a-zA-Z0-9]{34})$/
       @wallet = Wallet.find_or_create_by(address: params[:id])
-    elsif params['id'] =~ /^([A-Za-z0-9-]{1,}\.)tez$/
+    elsif params['id'] =~ /^([A-Za-z0-9-.]{1,}\.)tez$/
       domain_check = Wallet.find_by(domain: params[:id])
 
       if domain_check.blank?
