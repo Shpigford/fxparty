@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       get 'top'
       get 'feed'
       get 'hefty'
+      get 'deals'
     end
     member do
       get 'download'
@@ -15,11 +16,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :tokens do
-    collection do
-      get 'deals'
-    end
-  end
+  resources :tokens
   
   get '/search', to: 'pages#search', as: 'search'
 

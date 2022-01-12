@@ -1,0 +1,174 @@
+<header class="bg-white shadow">
+  <div class="flex justify-between px-4 py-6 mx-auto sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-bold text-gray-900">
+    Deals <span class="text-xs font-light text-gray-400 align-middle">Items listed below recent sales average</span>
+    </h1>
+  </div>
+</header>
+
+<main class="border-t border-gray-200>
+  <div class="mx-auto">
+    <div class="flex flex-col">
+      <div class="">
+        <div class="">
+          <div class="flex flex-row-reverse bg-white border-b" data-controller="column-filter" data-column-filter-type="deals">
+            <div class="relative inline-block text-left">
+              <div>
+                <button type="button" class="inline-flex justify-center w-full px-6 py-4 text-sm font-medium text-gray-700 bg-white border-l border-gray-300 hover:bg-gray-50 focus:outline-none focus:bg-gray-200" id="menu-button" aria-expanded="true" aria-haspopup="true" data-action="click->column-filter#show">
+                  <i class="w-5 h-5 mr-2 text-blue-600 fa-duotone fa-table-columns"></i> Columns
+                </button>
+              </div>
+
+              <div class="absolute right-0 z-30 hidden p-4 mt-2 origin-top-right bg-white rounded-md shadow-lg w-46 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" data-column-filter-target="options">
+                  
+                <form class="space-y-4">
+                  <% [['Token', 'token'], ['Artist', 'artist'], ['Progress', 'balance'], ['Offer Price', 'offer_price'], ['Recent Sales (Avg)', 'sec_avg_recent'], ['Offer Difference', 'offer_diff'], ['Avg Price 24h', 'avg_price_24h'], ['# Sales 24h', 'sec_volume_nb_24'], ['Royalties', 'royalties'], ['Floor', 'floor'], ['Floor Change 24h', 'floor_change_24h'],  ['Highest Sold', 'highest_sold']].each_with_index do |filter, index| %>
+                    <div class="flex items-center">
+                      <input id="filter-<%= index %>" name="filter" value="<%= filter[1] %>" type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" data-action="click->column-filter#filter" data-column-filter-target="filters">
+                      <label for="filter-<%= index %>" class="pr-6 ml-3 text-sm font-medium text-gray-900 whitespace-nowrap">
+                        <%= filter[0] %>
+                      </label>
+                    </div>
+                  <% end %>
+                </form>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="overflow-hidden border-b border-gray-200 shadow">
+          <%= turbo_frame_tag "items" do %>
+          <div class="overflow-x-auto" data-controller="column-filter" data-column-filter-type="deals">
+          <table class="min-w-full divide-y divide-gray-200 table-fixed">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="sticky top-0 left-0 px-4 py-3 text-xs font-medium text-left text-gray-700 uppercase bg-gray-200 z-30 <%= cell_color_sort(params[:sort], 'item', true) %>">
+                <%= heading_link('deals', 'Item', 'item', 'text', params[:dir], params[:sort]) %>
+                </th>
+                <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'token', true) %>" data-column="token">
+                  <%= heading_link('deals', 'Token', 'token', 'number', params[:dir], params[:sort]) %>
+                </th>
+                <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'artist', true) %>" data-column="artist">
+                  <%= heading_link('deals', 'Artist', 'artist', 'text', params[:dir], params[:sort]) %>
+                </th>
+                <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'balance', true) %>" data-column="balance">
+                  <%= heading_link('deals', 'Progress', 'balance', 'number', params[:dir], params[:sort]) %>
+                </th>
+                <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'offer_price', true) %>" data-column="offer_price">
+                  <%= heading_link('deals', 'Offer Price', 'offer_price', 'number', params[:dir], params[:sort]) %>
+                </th>
+                <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'sec_avg_recent', true) %>" data-column="sec_avg_recent">
+                  <%= heading_link('deals', 'Recent Sales (Avg)', 'sec_avg_recent', 'number', params[:dir], params[:sort]) %>
+                </th>
+                <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'offer_diff', true) %>" data-column="offer_diff">
+                  <%= heading_link('deals', 'Offer Difference', 'offer_diff', 'number', params[:dir], params[:sort]) %>
+                </th>
+                <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'avg_price_24h', true) %>" data-column="avg_price_24h">
+                  <%= heading_link('deals', 'Avg Price 24h', 'avg_price_24h', 'number', params[:dir], params[:sort]) %>
+                </th>
+                <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'sec_volume_nb_24', true) %>" data-column="sec_volume_nb_24">
+                  <%= heading_link('deals', '# Sales 24h', 'sec_volume_nb_24', 'number', params[:dir], params[:sort]) %>
+                </th>
+                <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'royalties', true) %>" data-column="royalties">
+                  <%= heading_link('deals', 'Royalties', 'royalties', 'number', params[:dir], params[:sort]) %>
+                </th>
+                
+                <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'floor', true) %>" data-column="floor">
+                  <%= heading_link('deals', 'Floor', 'floor', 'number', params[:dir], params[:sort]) %>
+                </th>
+                <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'floor_change_24h', true) %>" data-column="floor_change_24h">
+                  <%= heading_link('deals', 'Floor Change 24h', 'floor_change_24h', 'number', params[:dir], params[:sort]) %>
+                </th>
+                
+                <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'highest_sold', true) %>" data-column="highest_sold">
+                  <%= heading_link('deals', 'Highest Sold', 'highest_sold', 'number', params[:dir], params[:sort]) %>
+                </th>
+                
+              </tr>
+            </thead>
+              
+            <tbody>
+              <% @items.each do |item| %>
+              <tr class="bg-white odd:bg-gray-50">
+                <td class="sticky left-0 max-w-[15rem] px-4 py-3 text-sm text-gray-800 truncate bg-white whitespace-nowrap">
+                  <%= link_to item.name, "https://www.fxhash.xyz/gentk/#{item.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
+                </td>
+                <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'token') %>" data-column="token">
+                  <%= link_to item.token.fxid, "https://www.fxhash.xyz/marketplace/generative/#{item.token.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
+                </td>
+                <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'artist') %>" data-column="artist">
+                  <%= link_to item.token.author_name.to_s, "https://www.fxhash.xyz/pkh/#{item.token.author_address}" %>
+                </td>
+                <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'balance') %>" data-column="balance">
+                <div class="flex">
+                  <div class="w-24 h-1 mt-1 bg-gray-200">
+                  <% 
+                    progress_color = item.token.mint_progress.to_f >= 100 ? 'bg-green-500' : 'bg-blue-500'
+                  %>
+                    <div class="h-1 <%= progress_color %>" style="width: <%= item.token.mint_progress %>%"></div> 
+                  </div> 
+                  <div class="ml-2 text-xs text-gray-500">(<%= item.token.supply - item.token.balance %>/<%= item.token.supply %>)</div>
+                </div>
+                </td>
+                <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'offer_price') %>" data-column="offer_price">
+                  <%= item.offer_price.present? ? display_tez(item.offer_price) : "<span class='text-gray-200'>—</span>".html_safe %>
+                </td>
+
+                <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'sec_avg_recent') %>" data-column="sec_avg_recent">
+                  <%= display_tez item.token.sec_avg_recent %>
+                </td>
+
+                <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'offer_diff') %>" data-column="offer_diff">
+                  <% 
+                    offer_diff = item.token.sec_avg_recent.to_f - item.offer_price.to_f
+                  %>
+                  <%= display_tez offer_diff %>
+                </td>
+
+                <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'avg_price_24h') %>" data-column="avg_price_24h">
+                  <%= item.token.avg_price_24h.to_i > 0 ? display_tez(item.token.avg_price_24h.to_f) : "<span class='text-gray-200'>—</span>".html_safe %>
+                </td>
+                <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'sec_volume_nb_24') %>" data-column="sec_volume_nb_24">
+                  <%= item.token.sec_volume_nb_24.to_i %>
+                </td>
+
+                <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'royalties') %>" data-column="royalties">
+                  <%= (item.token.royalties.to_f / 10).to_s.sub(/\.?0+$/, '') %>%
+                </td>
+              
+                <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'floor') %>" data-column="floor">
+                  <% if item.last_purchase_price_tz.present? %>
+                  <%= item.token.floor.present? ? display_tez(item.token.floor) : "<span class='text-gray-200'>—</span>".html_safe %>
+                  <% end %>
+                </td>
+                <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'floor_change_24h') %>" data-column="floor_change_24h">
+                  <% 
+                    floor_change_color = case
+                    when item.token.floor_change_24h.to_f > 0
+                      'text-green-500'
+                    when item.token.floor_change_24h.to_f < 0
+                      'text-red-500'
+                    else
+                      'text-gray-200'
+                    end
+                  %>
+                  <span class=<%= floor_change_color %>><%= number_to_percentage item.token.floor_change_24h, precision: 1 %></span>
+                </td>
+                
+                <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'highest_sold') %>" data-column="highest_sold">
+                  <%= item.token.highest_sold.present? ? display_tez(item.token.highest_sold) : "<span class='text-gray-200'>—</span>".html_safe %>
+                </td>
+                
+              </tr>
+              <% end %>
+            </tbody>
+              
+          </table>
+          </div>
+          <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -132,6 +132,63 @@ class WalletsController < ApplicationController
   def hefty
     @items = Item.where('last_purchase_price_tz >= ?', 50000000).order('last_purchase_at desc NULLS LAST').limit(100)
   end
+
+  def deals
+    if params[:sort].present?
+      sort = case params[:sort]
+      when 'item'
+        'name'
+      when 'token'
+        'tokens.fxid'
+      when 'floor'
+        'tokens.floor'
+      when 'highest_sold'
+        'tokens.highest_sold'
+      when 'sec_volume_tz_24'
+        'tokens.sec_volume_tz_24'
+      when 'sec_volume_nb_24'
+        'tokens.sec_volume_nb_24'
+      when 'balance'
+        'tokens.mint_progress'
+      when 'avg_price_24h'
+        'tokens.avg_price_24h'
+      when 'floor_change_24h'
+        'tokens.floor_change_24h'
+      when 'sec_avg_recent'
+        'tokens.sec_avg_recent'
+      when 'last_purchase_at'
+        'last_purchase_at'
+      when 'artist'
+        'tokens.author_name'
+      when 'royalties'
+        'tokens.royalties'
+      when 'offer_price'
+        'offer_price'
+      when 'offer_diff'
+        'tokens.sec_avg_recent - offer_price'
+      else
+        params[:sort]
+      end
+    else
+      sort = 'tokens.sec_avg_recent - offer_price'
+    end
+
+    if params[:dir].present?
+      sort_direction = case params[:dir]
+      when 'asc'
+        'asc'
+      else
+        'desc'
+      end
+    else
+      sort_direction = 'desc'
+    end
+
+    @items = Item.joins(:token).where('offer_price < tokens.sec_avg_recent').order(Arel.sql("#{sort} #{sort_direction} NULLS LAST")).limit(500)
+
+    @link_sort = sort_direction == 'desc' ? 'asc' : 'desc'
+  end
+  
   
 
 private
