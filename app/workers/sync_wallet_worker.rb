@@ -39,6 +39,10 @@ class SyncWalletWorker
             asset.token_fxid = fx_asset['issuer']['id']
             asset.image_url = fx_asset['metadata']['displayUri'] if fx_asset['metadata']['displayUri'].present?
 
+
+            #######################################################################
+            # Purchase price
+            #######################################################################
             price_found = false
             fx_asset['actions'].each do |action|
               if (action['type'] == 'MINTED_FROM' or action['type'] == 'OFFER_ACCEPTED') and price_found == false
@@ -47,6 +51,16 @@ class SyncWalletWorker
                 price_found = true
               end
             end
+
+            #######################################################################
+            # Current offer
+            #######################################################################
+            if fx_asset['offer'].present?
+              asset.offer_price = fx_asset['offer']['price']
+            else
+              asset.offer_price = nil
+            end
+            
 
             asset.save
             current_nfts.push(asset.id)

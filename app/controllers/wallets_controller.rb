@@ -31,6 +31,8 @@ class WalletsController < ApplicationController
           'tokens.author_name'
         when 'royalties'
           'tokens.royalties'
+        when 'offer_price'
+          'offer_price'
         else
           params[:sort]
         end
