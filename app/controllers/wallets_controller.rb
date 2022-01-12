@@ -27,6 +27,10 @@ class WalletsController < ApplicationController
           'tokens.sec_avg_recent'
         when 'last_purchase_at'
           'last_purchase_at'
+        when 'artist'
+          'tokens.author_name'
+        when 'royalties'
+          'tokens.royalties'
         else
           params[:sort]
         end

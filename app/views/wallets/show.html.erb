@@ -97,7 +97,7 @@
                 <div class="absolute right-0 z-30 hidden p-4 mt-2 origin-top-right bg-white rounded-md shadow-lg w-46 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" data-column-filter-target="options">
                   
                   <form class="space-y-4">
-                    <% [['Token', 'token'], ['Progress', 'balance'], ['Price Paid', 'last_purchase_price_tz'], ['Purchased On', 'last_purchase_at'], ['Floor', 'floor'], ['Floor Change 24h', 'floor_change_24h'], ['Recent Sales (Avg)', 'sec_avg_recent'], ['Highest Sold', 'highest_sold'], ['Avg Price 24h', 'avg_price_24h'], ['# Sales 24h', 'sec_volume_nb_24']].each_with_index do |filter, index| %>
+                    <% [['Token', 'token'], ['Artist', 'artist'], ['Progress', 'balance'], ['Price Paid', 'last_purchase_price_tz'], ['Purchased On', 'last_purchase_at'], ['Royalties', 'royalties'], ['Floor', 'floor'], ['Floor Change 24h', 'floor_change_24h'], ['Recent Sales (Avg)', 'sec_avg_recent'], ['Highest Sold', 'highest_sold'], ['Avg Price 24h', 'avg_price_24h'], ['# Sales 24h', 'sec_volume_nb_24']].each_with_index do |filter, index| %>
                       <div class="flex items-center">
                         <input id="filter-<%= index %>" name="filter" value="<%= filter[1] %>" type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" data-action="click->column-filter#filter" data-column-filter-target="filters">
                         <label for="filter-<%= index %>" class="pr-6 ml-3 text-sm font-medium text-gray-900 whitespace-nowrap">
@@ -123,6 +123,9 @@
                   <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'token', true) %>" data-column="token">
                     <%= heading_link(@wallet.address, 'Token', 'token', 'number', params[:dir], params[:sort]) %>
                   </th>
+                  <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'artist', true) %>" data-column="artist">
+                    <%= heading_link(@wallet.address, 'Artist', 'artist', 'text', params[:dir], params[:sort]) %>
+                  </th>
                   <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'balance', true) %>" data-column="balance">
                     <%= heading_link(@wallet.address, 'Progress', 'balance', 'number', params[:dir], params[:sort]) %>
                   </th>
@@ -131,6 +134,9 @@
                   </th>
                   <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'last_purchase_at', true) %>" data-column="last_purchase_at">
                     <%= heading_link(@wallet.address, 'Purchased On', 'last_purchase_at', 'number', params[:dir], params[:sort]) %>
+                  </th>
+                  <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'royalties', true) %>" data-column="royalties">
+                    <%= heading_link(@wallet.address, 'Royalties', 'royalties', 'number', params[:dir], params[:sort]) %>
                   </th>
                   <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'floor', true) %>" data-column="floor">
                     <%= heading_link(@wallet.address, 'Floor', 'floor', 'number', params[:dir], params[:sort]) %>
@@ -162,6 +168,9 @@
                   <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'token') %>" data-column="token">
                     <%= link_to item.token.fxid, "https://www.fxhash.xyz/marketplace/generative/#{item.token.fxid}", class: 'text-blue-600 hover:text-blue-900' %>
                   </td>
+                  <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'artist') %>" data-column="artist">
+                    <%= link_to item.token.author_name.to_s, "https://www.fxhash.xyz/pkh/#{item.token.author_address}" %>
+                  </td>
                   <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'balance') %>" data-column="balance">
                   <div class="flex">
                     <div class="w-24 h-1 mt-1 bg-gray-200">
@@ -180,6 +189,9 @@
                   </td>
                   <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'last_purchase_at') %>" data-column="last_purchase_at">
                     <%= item.last_purchase_at.strftime("%b %-e, %Y %H:%M") if item.last_purchase_at.present? %>
+                  </td>
+                  <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'royalties') %>" data-column="royalties">
+                    <%= (item.token.royalties.to_f / 10).to_s.sub(/\.?0+$/, '') %>%
                   </td>
                   <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'floor') %>" data-column="floor">
                     <% if item.last_purchase_price_tz.present? %>
