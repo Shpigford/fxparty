@@ -186,7 +186,7 @@ class WalletsController < ApplicationController
       sort_direction = 'desc'
     end
 
-    @items = Item.joins(:token).where('offer_price < tokens.sec_avg_recent').order(Arel.sql("#{sort} #{sort_direction} NULLS LAST")).limit(500)
+    @items = Item.joins(:token).where('offer_price < tokens.sec_avg_recent').where('offer_price > 0').order(Arel.sql("#{sort} #{sort_direction} NULLS LAST")).limit(500)
 
     @link_sort = sort_direction == 'desc' ? 'asc' : 'desc'
   end

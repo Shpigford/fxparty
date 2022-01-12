@@ -33,8 +33,9 @@ class SyncWalletWorker
             fx_asset = token
             token = Token.find_by(fxid: fx_asset['issuer']['id'])
 
-            asset = Item.find_or_create_by(fxid: fx_asset["id"], wallet: wallet, token: token)
-
+            asset = Item.find_or_create_by(fxid: fx_asset["id"], token: token)
+            
+            asset.wallet = wallet
             asset.name = fx_asset['name']
             asset.token_fxid = fx_asset['issuer']['id']
             asset.image_url = fx_asset['metadata']['displayUri'] if fx_asset['metadata']['displayUri'].present?
