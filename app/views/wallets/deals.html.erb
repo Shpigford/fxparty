@@ -22,7 +22,7 @@
               <div class="absolute right-0 z-30 hidden p-4 mt-2 origin-top-right bg-white rounded-md shadow-lg w-46 ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" data-column-filter-target="options">
                   
                 <form class="space-y-4">
-                  <% [['Token', 'token'], ['Artist', 'artist'], ['Progress', 'balance'], ['Offer Price', 'offer_price'], ['Recent Sales (Avg)', 'sec_avg_recent'], ['Offer Difference', 'offer_diff'], ['Avg Price 24h', 'avg_price_24h'], ['# Sales 24h', 'sec_volume_nb_24'], ['Royalties', 'royalties'], ['Floor', 'floor'], ['Floor Change 24h', 'floor_change_24h'],  ['Highest Sold', 'highest_sold']].each_with_index do |filter, index| %>
+                  <% [['Token', 'token'], ['Artist', 'artist'], ['Progress', 'balance'], ['Offer Price', 'offer_price'], ['Recent Sales (Avg)', 'sec_avg_recent'], ['Offer Diff', 'offer_diff'], ['Offer Diff %', 'offer_diff_percent'], ['Avg Price 24h', 'avg_price_24h'], ['# Sales 24h', 'sec_volume_nb_24'], ['Royalties', 'royalties'], ['Floor', 'floor'], ['Floor Change 24h', 'floor_change_24h'],  ['Highest Sold', 'highest_sold']].each_with_index do |filter, index| %>
                     <div class="flex items-center">
                       <input id="filter-<%= index %>" name="filter" value="<%= filter[1] %>" type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" data-action="click->column-filter#filter" data-column-filter-target="filters">
                       <label for="filter-<%= index %>" class="pr-6 ml-3 text-sm font-medium text-gray-900 whitespace-nowrap">
@@ -61,7 +61,10 @@
                   <%= heading_link('deals', 'Recent Sales (Avg)', 'sec_avg_recent', 'number', params[:dir], params[:sort]) %>
                 </th>
                 <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'offer_diff', true) %>" data-column="offer_diff">
-                  <%= heading_link('deals', 'Offer Difference', 'offer_diff', 'number', params[:dir], params[:sort]) %>
+                  <%= heading_link('deals', 'Offer Diff', 'offer_diff', 'number', params[:dir], params[:sort]) %>
+                </th>
+                <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'offer_diff_percent', true) %>" data-column="offer_diff_percent">
+                  <%= heading_link('deals', 'Offer Diff %', 'offer_diff_percent', 'number', params[:dir], params[:sort]) %>
                 </th>
                 <th scope="col" class="data-head number hidden <%= cell_color_sort(params[:sort], 'avg_price_24h', true) %>" data-column="avg_price_24h">
                   <%= heading_link('deals', 'Avg Price 24h', 'avg_price_24h', 'number', params[:dir], params[:sort]) %>
@@ -123,6 +126,13 @@
                     offer_diff = item.token.sec_avg_recent.to_f - item.offer_price.to_f
                   %>
                   <%= display_tez offer_diff %>
+                </td>
+
+                 <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'offer_diff_percent') %>" data-column="offer_diff_percent">
+                  <% 
+                    offer_diff_percent = ((item.token.sec_avg_recent.to_f - item.offer_price.to_f) / item.token.sec_avg_recent.to_f) * 100
+                  %>
+                  <%= offer_diff_percent.round(1) %>%
                 </td>
 
                 <td class="data-cell hidden <%= cell_color_sort(params[:sort], 'avg_price_24h') %>" data-column="avg_price_24h">

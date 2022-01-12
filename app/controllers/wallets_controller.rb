@@ -166,11 +166,13 @@ class WalletsController < ApplicationController
         'offer_price'
       when 'offer_diff'
         'tokens.sec_avg_recent - offer_price'
+      when 'offer_diff_percent'
+        '(tokens.sec_avg_recent - offer_price) / tokens.sec_avg_recent'
       else
         params[:sort]
       end
     else
-      sort = 'tokens.sec_avg_recent - offer_price'
+      sort = '(tokens.sec_avg_recent - offer_price) / tokens.sec_avg_recent'
     end
 
     if params[:dir].present?
