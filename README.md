@@ -23,6 +23,12 @@ bin/dev
 
 And visit [https://localhost:3000](https://localhost:3000)
 
+## Performance
+
+The app uses Skylight to monitor performance.
+
+[![View performance data on Skylight](https://badges.skylight.io/typical/YtMR4RJSeMTs.svg)](https://oss.skylight.io/app/applications/YtMR4RJSeMTs) [![View performance data on Skylight](https://badges.skylight.io/problem/YtMR4RJSeMTs.svg)](https://oss.skylight.io/app/applications/YtMR4RJSeMTs) [![View performance data on Skylight](https://badges.skylight.io/rpm/YtMR4RJSeMTs.svg)](https://oss.skylight.io/app/applications/YtMR4RJSeMTs)
+
 ## Contributing
 
 It's still very early days for this so your mileage will vary here and lots of things will break.
