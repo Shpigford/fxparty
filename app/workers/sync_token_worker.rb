@@ -6,7 +6,7 @@ class SyncTokenWorker
   def perform(token_id)
     token = Token.find_or_create_by(fxid: token_id)
 
-    fx_token = HTTParty.post("https://api.fxhash.xyz/graphql", :body => '{"operationName":"Query","variables":{"id":' + token_id.to_s + '},"query":"query Query($id: Float!) {generativeToken(id: $id) {id name price supply balance royalties createdAt metadata __typename marketStats {floor median highestSold lowestSold totalListing primTotal secVolumeTz secVolumeNb secVolumeTz24 secVolumeNb24 __typename} author {id name avatarUri __typename}}}"}',
+    fx_token = HTTParty.post("https://api.fxhash.xyz/graphql", :body => '{"operationName":"Query","variables":{"id":' + token_id.to_s + '},"query":"query Query($id: Float!) {generativeToken(id: $id) {id name price supply balance royalties createdAt metadata __typename marketStats {floor median highestSold lowestSold listed primVolumeTz secVolumeTz secVolumeNb secVolumeTz24 secVolumeNb24 __typename} author {id name avatarUri __typename}}}"}',
     :headers => {'Content-Type' => 'application/json'} ).body
     fx_token_data = JSON.parse(fx_token)
     fx_token_obj = fx_token_data['data']['generativeToken']
@@ -26,10 +26,10 @@ class SyncTokenWorker
 
       token.floor = fx_token_obj['marketStats']['floor']
       token.median = fx_token_obj['marketStats']['median']
-      token.total_listing = fx_token_obj['marketStats']['totalListing']
+      token.total_listing = fx_token_obj['marketStats']['listed']
       token.highest_sold = fx_token_obj['marketStats']['highestSold']
       token.lowest_sold = fx_token_obj['marketStats']['lowestSold']
-      token.prim_total = fx_token_obj['marketStats']['primTotal']
+      token.prim_total = fx_token_obj['marketStats']['primVolumeTz']
       token.sec_volume_tz = fx_token_obj['marketStats']['secVolumeTz']
       token.sec_volume_nb = fx_token_obj['marketStats']['secVolumeNb']
       token.sec_volume_tz_24 = fx_token_obj['marketStats']['secVolumeTz24']
