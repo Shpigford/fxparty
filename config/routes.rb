@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :tokens
   
   get '/search', to: 'pages#search', as: 'search'
+  get '/wallpaper', to: 'pages#wallpaper', as: 'wallpaper'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
