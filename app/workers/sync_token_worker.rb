@@ -41,11 +41,12 @@ class SyncTokenWorker
 
       token.delisted = false
 
+      captured_at = DateTime.now
+
       #######################################################################
       # 24h floor change
       #######################################################################
       if token.stats.where(metric: 'floor').where("DATE(captured_at) = ?", Date.today-1).order(captured_at: :asc).present?
-        captured_at = DateTime.now
 
         current_floor = token.floor.to_f
         yesterday_floor = token.stats.where(metric: 'floor').where("DATE(captured_at) = ?", Date.today-1).order(captured_at: :asc).last.value.to_f
