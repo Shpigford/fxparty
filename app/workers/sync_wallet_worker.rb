@@ -21,7 +21,8 @@ class SyncWalletWorker
       until more_events === false do
         Rails.logger.warn("OFFSET: #{offset}")
         fx_assets = HTTParty.post("https://api.fxhash.xyz/graphql", :body => '{"operationName":"Query","variables":{"id":"' + wallet_address + '","skip":'+offset.to_s+',"take":50},"query":"query Query($id: String!, $take: Int, $skip: Int) {user(id: $id) {id objkts(take: $take, skip: $skip) {id assigned iteration owner {id name avatarUri __typename} issuer {id name flag author {id name avatarUri __typename} __typename} name metadata actions {type metadata createdAt __typename} createdAt updatedAt offer {id price issuer {id name avatarUri __typename} __typename} __typename} __typename}}"}',
-        :headers => {'Content-Type' => 'application/json'} ).body
+        :headers => {'Content-Type' => 'application/json'},
+        :timeout => 10).body
         fx_assets_data = JSON.parse(fx_assets)
 
         fx_tokens = fx_assets_data['data']['user']['objkts']
