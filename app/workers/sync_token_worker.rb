@@ -81,18 +81,18 @@ class SyncTokenWorker
       end
 
       Stat.insert_all([
-        { token_id: token.id, metric: 'floor', value: token.floor, captured_at: captured_at },
-        { token_id: token.id, metric: 'median', value: token.median, captured_at: captured_at },
-        { token_id: token.id, metric: 'total_listing', value: token.total_listing, captured_at: captured_at },
-        { token_id: token.id, metric: 'highest_sold', value: token.highest_sold, captured_at: captured_at },
-        { token_id: token.id, metric: 'lowest_sold', value: token.lowest_sold, captured_at: captured_at },
-        { token_id: token.id, metric: 'prim_total', value: token.prim_total, captured_at: captured_at },
-        { token_id: token.id, metric: 'sec_volume_tz', value: token.sec_volume_tz, captured_at: captured_at },
-        { token_id: token.id, metric: 'sec_volume_nb', value: token.sec_volume_nb, captured_at: captured_at },
-        { token_id: token.id, metric: 'sec_volume_tz_24', value: token.sec_volume_tz_24, captured_at: captured_at },
-        { token_id: token.id, metric: 'sec_volume_nb_24', value: token.sec_volume_nb_24, captured_at: captured_at },
-        { token_id: token.id, metric: 'avg_price_24h', value: token.avg_price_24h.to_f, captured_at: captured_at },
-        { token_id: token.id, metric: 'floor_change_24h', value: token.floor_change_24h, captured_at: captured_at }
+        { token_id: token.id, metric: 'floor', value: token.floor, captured_at: captured_at }
+        # { token_id: token.id, metric: 'median', value: token.median, captured_at: captured_at },
+        # { token_id: token.id, metric: 'total_listing', value: token.total_listing, captured_at: captured_at },
+        # { token_id: token.id, metric: 'highest_sold', value: token.highest_sold, captured_at: captured_at },
+        # { token_id: token.id, metric: 'lowest_sold', value: token.lowest_sold, captured_at: captured_at },
+        # { token_id: token.id, metric: 'prim_total', value: token.prim_total, captured_at: captured_at },
+        # { token_id: token.id, metric: 'sec_volume_tz', value: token.sec_volume_tz, captured_at: captured_at },
+        # { token_id: token.id, metric: 'sec_volume_nb', value: token.sec_volume_nb, captured_at: captured_at },
+        # { token_id: token.id, metric: 'sec_volume_tz_24', value: token.sec_volume_tz_24, captured_at: captured_at },
+        # { token_id: token.id, metric: 'sec_volume_nb_24', value: token.sec_volume_nb_24, captured_at: captured_at },
+        # { token_id: token.id, metric: 'avg_price_24h', value: token.avg_price_24h.to_f, captured_at: captured_at },
+        # { token_id: token.id, metric: 'floor_change_24h', value: token.floor_change_24h, captured_at: captured_at }
       ])
 
       token.updated_at = Time.now
