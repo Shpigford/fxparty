@@ -3,6 +3,10 @@ class PagesController < ApplicationController
     render layout: "landing"
   end
 
+  def shutdown
+    render layout: "landing"
+  end
+
   def search
     if params[:wallet].present?
       redirect_to wallet_path(params[:wallet])

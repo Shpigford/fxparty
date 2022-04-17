@@ -3,6 +3,8 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   mount Sidekiq::Web => "/sidekiq"
 
+  get '*path' => redirect('/')
+
   resources :wallets, constraints: { id: /[^\/]+/ } do
     collection do
       get 'top'
@@ -24,5 +26,5 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  root "pages#index"
+  root "pages#shutdown"
 end
